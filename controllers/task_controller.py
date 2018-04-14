@@ -1,8 +1,12 @@
 from app import db
 from models import Tasks
 from models import Users
+<<<<<<< HEAD
 from models import Proposals
 from flask import jsonify
+=======
+from models import Ratings
+>>>>>>> 6b0edb243ec7e4cb0cb3af2c956a6672d0470754
 
 
 def get_all_tasks():
@@ -12,6 +16,13 @@ def get_all_tasks():
 def get_user_by_id(id):
     user = Users.query.get(id)
     return user
+
+def get_user_tasks(user_id):
+    tasks = Tasks.query.filter_by(user=user_id).all()
+    return tasks
+
+def get_task_rating(id):
+    rating = Ratings.query.filter_by(task=id).first()
 
 def get_task(id):
     task = Tasks.query.get(id)
