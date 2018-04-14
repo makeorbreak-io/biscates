@@ -28,29 +28,27 @@ def get_task(id):
 
 
 
-def updateProposal(proposalID, type):
+def update_proposal(proposalID, type):
 
-    proposal = Proposals.query.filter_by(id=proposalID)
+    proposal = Proposals.query.filter_by(id=proposalID).first()
 
-    print(proposal)
+    print ("update Proposal")
+    print(proposalID)
 
     status = 200
     msg = "Proposta aceite"
 
     if proposal is not None:
 
-     if type is 'accept':
-
+     if type == 'accept':
         proposal.accepted = True
+        print(proposal)
         db.session.commit()
 
      elif  type == 'reject':
-
         proposal.accepted = False
         db.session.commit()
-
      else:
-
         status = 400
         msg = "Erro ao alterar proposta"
 

@@ -74,10 +74,10 @@
 
     </div>
     {% set tasks = [
-    ["title","category","aprovado","Jorge Jesus","http://www2.pictures.zimbio.com/gi/Real+Madrid+CF+v+Sporting+Clube+de+Portugal+QSMFTsZhHuml.jpg","22"]
-    ,["title","category","aprovado","Jorge Jesus","http://www2.pictures.zimbio.com/gi/Real+Madrid+CF+v+Sporting+Clube+de+Portugal+QSMFTsZhHuml.jpg","12"]
-    ,["title","category","aprovado","Jorge Jesus","http://www2.pictures.zimbio.com/gi/Real+Madrid+CF+v+Sporting+Clube+de+Portugal+QSMFTsZhHuml.jpg","6"]
-    ,["title","category","aprovado","Jorge Jesus","http://www2.pictures.zimbio.com/gi/Real+Madrid+CF+v+Sporting+Clube+de+Portugal+QSMFTsZhHuml.jpg","8"]
+    ["title","category","aprovado","Jorge Jesus","http://www2.pictures.zimbio.com/gi/Real+Madrid+CF+v+Sporting+Clube+de+Portugal+QSMFTsZhHuml.jpg","22",2]
+    ,["title","category","aprovado","Jorge Jesus","http://www2.pictures.zimbio.com/gi/Real+Madrid+CF+v+Sporting+Clube+de+Portugal+QSMFTsZhHuml.jpg","12",2]
+    ,["title","category","aprovado","Jorge Jesus","http://www2.pictures.zimbio.com/gi/Real+Madrid+CF+v+Sporting+Clube+de+Portugal+QSMFTsZhHuml.jpg","6",2]
+    ,["title","category","aprovado","Jorge Jesus","http://www2.pictures.zimbio.com/gi/Real+Madrid+CF+v+Sporting+Clube+de+Portugal+QSMFTsZhHuml.jpg","8",2]
 
     ]
     %}
@@ -103,12 +103,12 @@
             </div>
 
             <div class="left ui buttons">
-                <button class="ui positive button">
+                <button class="ui positive button" onClick="acceptProposal({{task[6]}})">
                     <i class="small check icon"> </i>
                     Aceitar
                 </button>
                 <div class="ou"></div>
-                <button class="ui negative button">
+                <button class="ui negative button" onClick="rejectProposal({{task[6]}})">
                     <i class="small ban icon"> </i>
                     Rejeitar
                 </button>

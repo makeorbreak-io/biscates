@@ -87,7 +87,7 @@ def profile():
 
 
 @app.route("/proposal", methods=['POST'])
-def offer():
+def proposal():
             type = request.form.get('type')
 
             print(request.form)
@@ -103,11 +103,11 @@ def offer():
                 return redirect("/task?id=" + taskID)
 
             else:
-                print("benfas")
                 print(type)
-                proposalID = request.args.get('proposalID')
-                msg = updateProposal(proposalID, type)
-                return redirect("/task?id=" + "123456")
+                proposalID = request.form.get('proposalID')
+                msg = update_proposal(proposalID, type)
+                print(msg)
+                return msg
 
 
 

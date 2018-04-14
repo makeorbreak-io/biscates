@@ -1,12 +1,12 @@
 function acceptProposal(proposalID) {
-    var jqxhr = $.post( "127.0.0.1:5000/proposal", {type: 'accept',proposalID: proposalID}, function() {
-        alert( "success" );
+    var jqxhr = $.post( "/proposal", {type: 'accept',proposalID: proposalID}, function(result) {
+        alert( result );
     })
         .done(function() {
             alert( "second success" );
         })
         .fail(function() {
-            alert( "error" );
+            alert( e.toString() );
         })
         .always(function() {
             alert( "finished" );
@@ -14,14 +14,14 @@ function acceptProposal(proposalID) {
 }
 
 function rejectProposal(proposalID) {
-    var jqxhr = $.post( "127.0.0.1:5000/proposal", {type: 'reject',proposalID: proposalID}, function() {
+    var jqxhr = $.post( "/proposal", {type: 'reject',proposalID: proposalID}, function() {
         alert( "success" );
     })
         .done(function() {
             alert( "second success" );
         })
-        .fail(function() {
-            alert( "error" );
+        .fail(function(e) {
+            alert( e.toString() );
         })
         .always(function() {
             alert( "finished" );
