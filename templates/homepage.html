@@ -1,41 +1,40 @@
-{% extends "base.html" %}
+{% extends "body-sidebar.html" %}
 
 {% block sidecontent %}
-
-    <div class="ui grid">
-      <div class="ten wide column">
-        <div id="sidemenu" class="ui visible left vertical menu push">
-          <div class="ui item search">
-              <div class="ui icon input">
-                  <input class="prompt" placeholder="Procurar biscates..." type="text">
-                  <i class="search icon"></i>
-              </div>
-              <div class="results"></div>
+<br/>
+<div class="ui grid">
+  <div class="ten wide column">
+    <div class="ui visible left vertical menu push">
+      <div class="ui item search">
+          <div class="ui icon input">
+              <input class="prompt" placeholder="Procurar biscates..." type="text">
+              <i class="search icon"></i>
           </div>
-
-          {% set types = ["Canalizações","Portas"] %}
-          {% for type in types %}
-
-          <a class="item">
-              {{ type }}
-          </a>
-          {% endfor %}
+          <div class="results"></div>
       </div>
-      </div>
-      <div class="six wide column">
-      </div>
-    </div>
 
+      {% set types = ["Canalizações","Portas"] %}
+      {% for type in types %}
+
+      <a class="item">
+          {{ type }}
+      </a>
+      {% endfor %}
+  </div>
+  </div>
+  <div class="six wide column">
+  </div>
+</div>
 {% endblock %}
 
 {% block content %}
-    <div class="">
-        <br>
-        <div class="ui masthead container">
-            <h1 class="ui header">Os Biscates mais recentes...</h1>
-        </div>
-        <br>
-        <div class="main ui container">
+<div class="">
+    <br>
+    <div class="ui masthead container">
+        <h1 class="ui header">Os Biscates mais recentes...</h1>
+    </div>
+    <br>
+    <div class="main ui container">
 
             {% for task in tasks %}
 
@@ -54,10 +53,11 @@
                         <img class="ui  avatar big image" src={{task.user_info.photo}}> {{task.user_info.name}}
                     </div>
                 </div>
-            </a>
+            </div>
+        </a>
 
-            {% endfor %}
+        {% endfor %}
 
-        </div>
     </div>
+</div>
 {% endblock %}

@@ -2,6 +2,7 @@ from app import db
 from models import Tasks
 from models import Users
 
+
 def get_all_tasks():
     tasks = Tasks.query.filter_by(approved=False).order_by(Tasks.created_at).all()
     return tasks
