@@ -1,3 +1,17 @@
 * {
   font-family: "Roboto", Helvetica, sans-serif;
 }
+
+.ui.menu.nav {
+  height: 70px;
+  margin-bottom: 0px;
+}
+
+.ui.menu.nav a {
+  font-size: 1.3rem;
+}
+
+.ui.menu.nav .header {
+  font-size: 2rem;
+  padding: 0 68px;
+}
