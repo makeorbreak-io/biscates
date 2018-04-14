@@ -2,6 +2,7 @@ import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask import render_template
+from controllers improt task_controller
 
 
 app = Flask(__name__)
@@ -28,6 +29,11 @@ def taks():
 def profile():
     return render_template("profile.html")
 
+@app.route("/proposal", methods=['POST'])
+def offer():
+       if request.method == 'POST':
+            type = request.args.get('type')
+            proposalID = request.args.get('password')
 
 if __name__ == '__main__':
     app.run(debug=True)
