@@ -42,66 +42,53 @@
 </div>
 <br/>
 <div class="ui row">
+
+  {% if session['id'] != task.user %}
     <h2>Proposta</h2>
     <div class="ui segment">
-
         <form id="newproposal_form" class="ui form" method="POST" action="/proposal">
             {{ newproposal_form.csrf_token }}
             <div class="field" hidden>
                 {{ newproposal_form.user.label }} {{ newproposal_form.user(value=123456) }}
             </div>
-
             <div class="field">
                 {{ newproposal_form.offer.label }} {{ newproposal_form.offer(size=5) }}
             </div>
-
             <div class="field">
                 {{ newproposal_form.description.label }} {{ newproposal_form.description(size=200) }}
             </div>
-
             <div class="field" hidden>
                 {{ newproposal_form.task_id.label }} {{newproposal_form.task_id(value=task.id)}}
             </div>
-
             <div class="field" hidden>
                 {{ newproposal_form.type.label }} {{ newproposal_form.type(value='create') }}
             </div>
-
             <input type="submit" value="Criar" class="ui button" />
-
         </form>
-
-
     </div>
-    {% set tasks = [
-    ["title","category","aprovado","Jorge Jesus","http://www2.pictures.zimbio.com/gi/Real+Madrid+CF+v+Sporting+Clube+de+Portugal+QSMFTsZhHuml.jpg","22"]
-    ,["title","category","aprovado","Jorge Jesus","http://www2.pictures.zimbio.com/gi/Real+Madrid+CF+v+Sporting+Clube+de+Portugal+QSMFTsZhHuml.jpg","12"]
-    ,["title","category","aprovado","Jorge Jesus","http://www2.pictures.zimbio.com/gi/Real+Madrid+CF+v+Sporting+Clube+de+Portugal+QSMFTsZhHuml.jpg","6"]
-    ,["title","category","aprovado","Jorge Jesus","http://www2.pictures.zimbio.com/gi/Real+Madrid+CF+v+Sporting+Clube+de+Portugal+QSMFTsZhHuml.jpg","8"]
+    {% endif %}
 
-    ]
-    %}
-    {% for task in tasks %}
-
+    {% for proposal in proposals %}
     <div class="ui fluid card ">
         <div class="content">
-            <div class="header">{{task[0]}}</div>
+            <div class="header">{{proposal.description}}</div>
             <div class="meta">
-                <span class="category">{{task[1]}}</span>
-                <br>
-                <span class="category"> {{task[5]}}  <i class="small euro sign icon"> </i></span>
+                <span class="category"> {{proposal.offer}}  <i class="small euro sign icon"> </i></span>
             </div>
             <br>
             <div class="description">
-                <p>{{task[2]}}</p>
+              {% if proposal.accepted == true %}
+                <p>Proposta Aceite!</p>
+              {% endif %}
             </div>
         </div>
 
         <div class="extra content">
             <div class="right floated author">
-                <img class="ui  avatar big image" src={{task[4]}}> {{task[3]}}
+                <img class="ui  avatar big image" src={{proposal.user_info.photo}}> {{proposal.user_info.name}}
             </div>
 
+            {% if session['id'] == task.user %}
             <div class="left ui buttons">
                 <button class="ui positive button">
                     <i class="small check icon"> </i>
@@ -113,6 +100,8 @@
                     Rejeitar
                 </button>
             </div>
+            {% endif %}
+
         </div>
     </div>
     {% endfor %}

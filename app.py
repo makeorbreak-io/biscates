@@ -84,7 +84,10 @@ def task(task_id):
     id = float(task_id)
     task = get_task(id)
     task.user_info = get_user_by_id(task.user)
-    return render_template("task.html", task=task, newproposal_form=newproposal_form)
+    proposals = get_proposals(task_id)
+    for proposal in proposals:
+        proposal.user_info = get_user_by_id(proposal.user)
+    return render_template("task.html", task=task, newproposal_form=newproposal_form, proposals=proposals, session=session)
 
 
 @app.route("/profile/<user_id>")

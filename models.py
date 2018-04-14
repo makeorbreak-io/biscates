@@ -93,4 +93,4 @@ class Proposals(db.Model):
         self.task = task
 
     def __repr__(self):
-        return '<id {}>'.format(self.id)
+        return '<id {} user {} offer {} description {} accepted {} task {}>'.format(self.id, self.user, self.offer, self.description, self.accepted, self.task)

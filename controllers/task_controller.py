@@ -20,6 +20,7 @@ def get_user_tasks(user_id):
 
 def get_task_rating(id):
     rating = Ratings.query.filter_by(task=id).first()
+    return rating
 
 def get_task(id):
     task = Tasks.query.get(id)
@@ -30,6 +31,10 @@ def validate_login(email, password):
     if user and user.email == email and user.password == password:
         return user.id
     return None
+
+def get_proposals(task_id):
+    proposals = Proposals.query.filter_by(task=task_id).all()
+    return proposals
 
 def updateProposal(proposalID, type):
 
