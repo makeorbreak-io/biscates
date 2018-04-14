@@ -1,17 +1,23 @@
 import os
-from flask import Flask
+from flask import Flask, render_template, jsonify, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
-from flask import render_template
-from controllers improt task_controller
+from flask_wtf import FlaskForm
+from wtforms import TextField, PasswordField
+from wtforms.validators import DataRequired, Email
+from wtforms.fields.html5 import EmailField
+from controllers.task_controller import *
 
 
 app = Flask(__name__)
+app.secret_key = os.environ['SECRET_KEY']
 app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-from controllers.task_controller import get_all_tasks
 
+class LoginForm(FlaskForm):
+    email = EmailField('Email', [DataRequired(), Email()])
+    password = PasswordField('Password', validators=[DataRequired()])
 
 
 @app.route("/")
@@ -32,8 +38,22 @@ def profile():
 @app.route("/proposal", methods=['POST'])
 def offer():
        if request.method == 'POST':
+
             type = request.args.get('type')
-            proposalID = request.args.get('password')
+
+            if type == 'create':
+
+                user = request.args.get('user')
+                offer = request.args.get('offer')
+                description = request.args.get('description')
+                insertProposal(taskID, user, offer, description)
+
+            else:
+
+                proposalID = request.args.get('proposalID')
+                response = updateProposal(proposalID, type)
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
