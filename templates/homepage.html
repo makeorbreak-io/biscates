@@ -1,27 +1,37 @@
 {% extends "base.html" %}
 
 {% block sidecontent %}
-    <div class="ui visible inverted left vertical menu push">
-      <div class="ui item search">
-          <div class="ui icon input">
-              <input class="prompt" placeholder="Procurar biscates..." type="text">
-              <i class="search icon"></i>
-          </div>
-          <div class="results"></div>
+
+    <div class="ui grid">
+      <div class="three wide column">
       </div>
+      <div class="ten wide column">
+        <div class="ui visible inverted left vertical menu push">
+          <div class="ui item search">
+              <div class="ui icon input">
+                  <input class="prompt" placeholder="Procurar biscates..." type="text">
+                  <i class="search icon"></i>
+              </div>
+              <div class="results"></div>
+          </div>
 
-      {% set types = ["Canalizações","Portas"] %}
-      {% for type in types %}
+          {% set types = ["Canalizações","Portas"] %}
+          {% for type in types %}
 
-      <a class="item">
-          {{ type }}
-      </a>
-      {% endfor %}
-  </div>
+          <a class="item">
+              {{ type }}
+          </a>
+          {% endfor %}
+      </div>
+      </div>
+      <div class="three wide column">
+      </div>
+    </div>
+
 {% endblock %}
 
 {% block content %}
-    <div class="article">
+    <div class="">
         <br>
         <div class="ui masthead container">
             <h1 class="ui header">Os Biscates mais recentes...</h1>
