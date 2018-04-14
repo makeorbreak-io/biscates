@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block sidecontent %}
+<script src="{{ url_for('static', filename='js/profile.js') }}"></script>
+<br/>
+<div class="ui row">
+  <img class="ui massive avatar image" style="width: 200px; height: 200px; object-fit: cover;" src="http://www2.pictures.zimbio.com/gi/Real+Madrid+CF+v+Sporting+Clube+de+Portugal+QSMFTsZhHuml.jpg" />
+</div>
+<br/>
+<div class="ui row">
+  <h2>Jorge Jesus <i class="check circle icon blue"></i></h2>
+  <p>
+    <i class="at icon grey"></i> adorochiclas@trident.com
+  </p>
+  <p>
+    <i class="phone icon grey"></i> 912 259 789
+  </p>
+  <p>
+    <i class="map pin icon grey"></i> Areosa
+  </p>
+</div>
+{% endblock %}
+{% block content %}
+ <div class="ui row">
+   <div class="ui eight wide column">
+     <div class="ui row"></div>
+     <h2>Descrição</h2>
+     <p>
+       Doutorado em Canalização, perito em obras subsolo com canos de titânio. Também experiente em Carpintaria tendo já efetuado algumas obras tais como uma mesinha de cabeceira.
+     </p>
+   </div>
+ </div>
+ <br/>
+ <div class="ui row">
+   <h2>Biscates Realizados Anteriormente</h2>
+   {% set tasks = [
+   ["title","category","aprovado","3"] ,
+   ["title","category","aprovado","4"],
+   ["title","category","aprovado","2"] ,
+   ["title","category","aprovado","5"]
+   ] %} {% for task in tasks %}
+   <a class="ui fluid card " href="http://www.dog.com">
+     <div class="content">
+       <div class="header">{{task[0]}}</div>
+       <div class="meta">
+         <span class="category">{{task[1]}}</span>
+       </div>
+       <div class="description">
+         <p>{{task[2]}}</p>
+       </div>
+     </div>
+     <div class="extra content right aligned">
+       <div class='ui rating' data-rating={{task[3]}} data-max-rating="5" ></div>
+     </div>
+   </a>
+   {% endfor %}
+ </div>
+{% endblock %}
