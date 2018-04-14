@@ -20,8 +20,10 @@ class LoginForm(FlaskForm):
     email = EmailField('Email', [DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
 
+
 class RegisterForm(FlaskForm):
     email = EmailField('Email', [DataRequired(), Email()])
+    name = StringField('Name', [DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     confirm_password = PasswordField('Confirmar Password', validators=[
         DataRequired(),
@@ -73,7 +75,23 @@ def login():
 def register():
     register_form = RegisterForm()
     if register_form.validate_on_submit():
-        return redirect('/')
+        email = request.form['email']
+        name = request.form['name']
+        password = request.form['password']
+        confirm_password = request.form['confirm_password']
+
+        user = get_user_by_email(email)
+        if user:
+            register_form.password.errors = ['Utilizador já existe.']
+            return render_template('register.html', register_form=register_form)
+        else:
+            user_id = register_user(email, name, password)
+            if user_id:
+                session['id'] = user_id
+                return redirect(url_for('home'))
+            else:
+                register_form.confirm_password.errors = ['Erro a registar utilizador.']
+                return render_template('register.html', register_form=register_form)
 
     return render_template("register.html", register_form=register_form)
 

@@ -26,11 +26,29 @@ def get_task(id):
     task = Tasks.query.get(id)
     return task
 
+
+def get_user_by_email(email):
+    return Users.query.filter_by(email=email).first()
+
+
 def validate_login(email, password):
     user = Users.query.filter_by(email=email).first()
     if user and user.email == email and user.password == password:
         return user.id
     return None
+
+
+def register_user(email, name, password):
+    user = Users(name, email, password)
+
+    try:
+        db.session.add(user)
+        db.session.commit()
+    except Exception:
+        db.session.rollback()
+        return False
+
+    return True
 
 def get_proposals(task_id):
     proposals = Proposals.query.filter_by(task=task_id).all()
