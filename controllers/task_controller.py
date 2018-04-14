@@ -1,12 +1,10 @@
 from app import db
 from models import Tasks
 from models import Users
-<<<<<<< HEAD
 from models import Proposals
 from flask import jsonify
-=======
 from models import Ratings
->>>>>>> 6b0edb243ec7e4cb0cb3af2c956a6672d0470754
+
 
 
 def get_all_tasks():
