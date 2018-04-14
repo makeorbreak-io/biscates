@@ -1,4 +1,5 @@
 import os
+from controllers.task_controller import *
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask import render_template
@@ -12,6 +13,7 @@ db = SQLAlchemy(app)
 
 @app.route("/")
 def hello():
+    print(get_all_tasks())
     return render_template("homepage.html")
 
 
