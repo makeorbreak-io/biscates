@@ -5,7 +5,6 @@ from flask_wtf import FlaskForm
 from wtforms import StringField,TextField, PasswordField
 from wtforms.validators import DataRequired, Email, EqualTo
 from wtforms.fields.html5 import EmailField
-from controllers.task_controller import *
 from flask_login import LoginManager
 
 
@@ -18,6 +17,7 @@ db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+from controllers.task_controller import *
 
 class LoginForm(FlaskForm):
     email = EmailField('Email', [DataRequired(), Email()])
@@ -85,22 +85,22 @@ def profile():
     return render_template("profile.html", user=user, tasks=tasks)
 
 
+
 @app.route("/proposal", methods=['POST'])
 def offer():
-            type = request.args.get('type')
-            print(request.args)
+            type = request.form.get('type')
 
+            print(request.form)
 
-
-            if type is 'create':
-                taskID = request.args.get(task_id)
-                user = request.args.get('user')
-                offer = request.args.get('offer')
-                description = request.args.get('description')
+            if 'create' == type:
+                print("meme")
+                taskID = request.form.get('task_id')
+                user = request.form.get('user')
+                offer = request.form.get('offer')
+                description = request.form.get('description')
                 msg = insertProposal(taskID, user, offer, description)
-                print("lol")
-                taskID = "/task?id=" + taskID
-                return redirect(taskID)
+                print(msg)
+                return redirect("/task?id=" + taskID)
 
             else:
                 print("benfas")

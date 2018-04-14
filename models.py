@@ -22,6 +22,7 @@ class Users(db.Model):
     certified = db.Column(db.Boolean())
     created_at = db.Column(DateTime(timezone=True), server_default=func.now())
     updated_at = db.Column(DateTime(timezone=True), onupdate=func.now())
+    description = db.Column(db.String())
 
     def __init__(self, name, email, password):
         self.name = name

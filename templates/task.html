@@ -46,6 +46,7 @@
     <div class="ui segment">
 
         <form id="newproposal_form" class="ui form" method="POST" action="/proposal">
+            {{ newproposal_form.csrf_token }}
             <div class="field" hidden>
                 {{ newproposal_form.user.label }} {{ newproposal_form.user(value=123456) }}
             </div>
@@ -59,7 +60,7 @@
             </div>
 
             <div class="field" hidden>
-                {{ newproposal_form.task_id.label }} {{task.id}}
+                {{ newproposal_form.task_id.label }} {{newproposal_form.task_id(value=task.id)}}
             </div>
 
             <div class="field" hidden>

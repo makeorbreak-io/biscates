@@ -29,7 +29,10 @@ def get_task(id):
 
 
 def updateProposal(proposalID, type):
-    proposal = Proposals.query.filter_by(id=proposalID).first()
+
+    proposal = Proposals.query.filter_by(id=proposalID)
+
+    print(proposal)
 
     status = 200
     msg = "Proposta aceite"
@@ -56,7 +59,9 @@ def updateProposal(proposalID, type):
 
 def insertProposal(taskID, user, offer, description):
 
-    proposal = Proposals(user, offer, description, taskID)
+    proposal = Proposals(user, offer, description, False, taskID)
+
+    print(proposal)
 
     try:
 
