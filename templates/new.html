@@ -1,0 +1,26 @@
+{% extends "body-nosidebar.html" %}
+
+{% block content %}
+
+<form method="POST" class="ui form" action="/new">
+    {{ task_form.csrf_token }}
+    <div class="required field">
+        {{ task_form.title.label }} {{ task_form.title(size=30, required=required) }}
+    </div>
+
+    <div class="required field">
+        {{ task_form.location.label }} {{ task_form.location(size=30, required=required) }}
+    </div>
+
+    <div class="required field">
+        {{ task_form.price.label }} {{ task_form.price(size=30, required=required) }}
+    </div>
+
+    <div class="field">
+        {{ task_form.description.label }} {{ task_form.description(size=30) }}
+    </div>
+
+  <input type="submit" value="Go">
+</form>
+
+{% endblock %}

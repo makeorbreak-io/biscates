@@ -30,7 +30,7 @@ class Users(db.Model):
         self.password = password
 
     def __repr__(self):
-        return '<id {} name {} email {} photo {} address {} contact {} certified {}>'.format(self.id, self.email, self.photo, self.address, self.contact, self.certified)
+        return '<id {} name {} email {} photo {} address {} contact {} certified {} description {}>'.format(self.id, self.email, self.photo, self.address, self.contact, self.certified, self.description)
 
 
 class Tasks(db.Model):
@@ -93,4 +93,4 @@ class Proposals(db.Model):
         self.task = task
 
     def __repr__(self):
-        return '<id {}>'.format(self.id)
+        return '<id {} user {} offer {} description {} accepted {} task {}>'.format(self.id, self.user, self.offer, self.description, self.accepted, self.task)

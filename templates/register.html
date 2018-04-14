@@ -4,13 +4,13 @@
 <form id="register-form" class="ui form" method="POST" action="/register">
   {{ register_form.csrf_token }}
   <div class="required field">
-    {{ register_form.email.label }} {{ register_form.email(size=24) }}
+    {{ register_form.email.label }} {{ register_form.email(size=24, required=required) }}
   </div>
   <div class="required field">
-    {{ register_form.password.label }} {{ register_form.password(size=24) }}
+    {{ register_form.password.label }} {{ register_form.password(size=24, required=required) }}
   </div>
   <div class="required field">
-    {{ register_form.confirm_password.label }} {{ register_form.confirm_password(size=24) }}
+    {{ register_form.confirm_password.label }} {{ register_form.confirm_password(size=24, required=required) }}
   </div>
   <input type="submit" value="Registar" class="ui button" />
 </form>

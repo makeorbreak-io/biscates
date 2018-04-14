@@ -16,4 +16,3 @@ SQLAlchemy==1.2.6
 Werkzeug==0.14.1
 Flask-WTF==0.14.2
 WTForms==2.1
-flask-login==0.4.1

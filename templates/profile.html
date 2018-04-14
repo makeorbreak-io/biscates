@@ -6,7 +6,7 @@
 </div>
 <br/>
 <div class="ui row">
-  <h2>{{user.name}} {% if user.certified %}<i class="check circle icon blue"></i>{% endif %}</h2>
+  <h2>{{user.name}} {% if user.certified == true %}<i class="check circle icon blue"></i>{% endif %}</h2>
   <p>
     <i class="at icon grey"></i> {{user.email}}
   </p>
@@ -23,7 +23,11 @@
     <div class="ui row"></div>
     <h2>Descrição</h2>
     <p>
-      Doutorado em Canalização, perito em obras subsolo com canos de titânio. Também experiente em Carpintaria tendo já efetuado algumas obras tais como uma mesinha de cabeceira.
+      {% if user.description is none %}
+        O utilizador {{user.name}} não possui nenhuma descrição
+      {% else %}
+        {{user.description}}
+      {% endif %}
     </p>
   </div>
 </div>
@@ -31,7 +35,7 @@
 <div class="ui row">
   <h2>Biscates Realizados Anteriormente</h2>
   {% for task in tasks %}
-  <a class="ui fluid card " href="../task?id={{task.id}}">
+  <a class="ui fluid card " href="../task/{{task.id}}">
     <div class="content">
       <div class="header">{{task.title}}</div>
       <div class="meta">
