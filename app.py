@@ -1,20 +1,17 @@
 import os
-from flask import Flask, render_template, jsonify, redirect, url_for, request
+from flask import Flask, render_template, jsonify, redirect, url_for, request, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
-from wtforms import StringField,TextField, PasswordField, StringField
+from wtforms import StringField, TextField, PasswordField, StringField
 from wtforms.validators import DataRequired, Email, EqualTo
 from wtforms.fields.html5 import EmailField
-from flask_login import LoginManager
-
+from controllers.task_controller import *
 
 app = Flask(__name__)
 app.secret_key = os.environ['SECRET_KEY']
 app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
-login_manager = LoginManager()
-login_manager.init_app(app)
 
 from controllers.task_controller import *
 
@@ -22,7 +19,6 @@ from controllers.task_controller import *
 class LoginForm(FlaskForm):
     email = EmailField('Email', [DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
-
 
 class RegisterForm(FlaskForm):
     email = EmailField('Email', [DataRequired(), Email()])
@@ -59,7 +55,16 @@ def home():
 def login():
     login_form = LoginForm()
     if login_form.validate_on_submit():
-        return redirect('/')
+        email = request.form['email']
+        password = request.form['password']
+        user_id = validate_login(email, password)
+
+        if user_id:
+            session['id'] = user_id
+            return redirect(url_for('home'))
+        else:
+            login_form.password.errors = ['Login error']
+            return render_template('login.html', login_form=login_form)
 
     return render_template("login.html", login_form=login_form)
 

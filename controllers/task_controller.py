@@ -6,7 +6,6 @@ from flask import jsonify
 from models import Ratings
 
 
-
 def get_all_tasks():
     tasks = Tasks.query.filter_by(approved=False).order_by(Tasks.created_at).limit(10).all()
     return tasks
@@ -26,7 +25,11 @@ def get_task(id):
     task = Tasks.query.get(id)
     return task
 
-
+def validate_login(email, password):
+    user = Users.query.filter_by(email=email).first()
+    if user and user.email == email and user.password == password:
+        return user.id
+    return None
 
 def updateProposal(proposalID, type):
 

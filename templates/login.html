@@ -1,14 +1,27 @@
 {% extends "body-nosidebar.html" %}
 
 {% block content %}
-<form id="login-form" class="ui form" method="POST" action="/login">
+<form id="login-form" class="ui form error" method="POST" action="/login">
   {{ login_form.csrf_token }}
   <div class="required field">
     {{ login_form.email.label }} {{ login_form.email(size=24, required=required) }}
   </div>
+  {% if login_form.email.errors %}
+    <div class="ui error message">
+      <div class="header">Erro</div>
+      <p>{{ login_form.email.errors[0] }}</p>
+    </div>
+  {% endif %}
   <div class="required field">
     {{ login_form.password.label }} {{ login_form.password(size=24, required=required) }}
   </div>
+  {% if login_form.password.errors %}
+    <div class="ui error message">
+      <div class="header">Erro</div>
+      <p>{{ login_form.password.errors[0] }}</p>
+    </div>
+  {% endif %}
   <input type="submit" value="Entrar" class="ui button" />
+
 </form>
 {% endblock %}
