@@ -81,6 +81,7 @@ class Proposals(db.Model):
     offer = db.Column(db.Float, nullable=False)
     description = db.Column(db.String())
     accepted = db.Column(db.Boolean(), default=False)
+    task = db.Column(ForeignKey("task.id"), nullable=False)
 
     def __init__(self, user, offer, description, accepted):
         self.user = user
