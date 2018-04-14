@@ -1,0 +1,14 @@
+{% extends "body-nosidebar.html" %}
+
+{% block content %}
+<form id="register-form" class="ui form" method="POST" action="/register">
+  {{ register_form.csrf_token }}
+  <div class="required field">
+    {{ register_form.email.label }} {{ register_form.email(size=20) }}
+  </div>
+  <div class="required field">
+    {{ register_form.password.label }} {{ register_form.password(size=20) }}
+  </div>
+  <input type="submit" value="Registar" class="ui button" />
+</form>
+{% endblock %}

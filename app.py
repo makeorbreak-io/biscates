@@ -19,6 +19,15 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
 
 
+class RegisterForm(FlaskForm):
+    email = EmailField('Email', [DataRequired(), Email()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    confirm_password = PasswordField('Confirmar Password', validators=[
+        validators.DataRequired(),
+        validators.EqualTo('password', message='Passwords devem ser idênticas')
+    ])
+
+
 @app.route("/")
 def home():
     tasks = get_all_tasks()
@@ -40,6 +49,21 @@ def login_post():
         return redirect('/')
 
     return render_template("login.html", login_form=login_form)
+
+
+@app.route("/register", methods=["GET"])
+def register():
+    register_form = RegisterForm()
+    return render_template("register.html", register_form=register_form)
+
+
+@app.route("/register", methods=["POST"])
+def register_post():
+    register_form = RegisterForm()
+    if register_form.validate_on_submit():
+        return redirect('/')
+
+    return render_template("register.html", register_form=register_form)
 
 
 @app.route("/task")
