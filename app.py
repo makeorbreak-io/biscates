@@ -6,6 +6,7 @@ from wtforms import TextField, PasswordField
 from wtforms.validators import DataRequired, Email, EqualTo
 from wtforms.fields.html5 import EmailField
 from controllers.task_controller import *
+from flask_login import LoginManager
 
 
 
@@ -14,6 +15,8 @@ app.secret_key = os.environ['SECRET_KEY']
 app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 
 class LoginForm(FlaskForm):
@@ -45,14 +48,8 @@ def home():
     return render_template("homepage.html", tasks=tasks)
 
 
-@app.route("/login", methods=["GET"])
+@app.route("/login", methods=["GET", "POST"])
 def login():
-    login_form = LoginForm()
-    return render_template("login.html", login_form=login_form)
-
-
-@app.route("/login", methods=["POST"])
-def login_post():
     login_form = LoginForm()
     if login_form.validate_on_submit():
         return redirect('/')
@@ -60,14 +57,8 @@ def login_post():
     return render_template("login.html", login_form=login_form)
 
 
-@app.route("/register", methods=["GET"])
+@app.route("/register", methods=["GET", "POST"])
 def register():
-    register_form = RegisterForm()
-    return render_template("register.html", register_form=register_form)
-
-
-@app.route("/register", methods=["POST"])
-def register_post():
     register_form = RegisterForm()
     if register_form.validate_on_submit():
         return redirect('/')
