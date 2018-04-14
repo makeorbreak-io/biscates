@@ -6,7 +6,6 @@ from wtforms import TextField, PasswordField
 from wtforms.validators import DataRequired, Email, EqualTo
 from wtforms.fields.html5 import EmailField
 from controllers.task_controller import *
-from controllers.proposal_controller import *
 
 
 
