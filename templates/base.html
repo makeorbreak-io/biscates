@@ -32,16 +32,19 @@
   <div class="pushable">
     <div id="content" class="pusher">
         <div class="ui grid">
-          <div class="two wide column">
+          <div class="row">
           </div>
-          <div class="four wide column">
-            {% block sidecontent %} {% endblock %}
-          </div>
-          <div class="eight wide column">
-            {% block content %} {% endblock %}
-          </div>
-          <div class="two wide column">
-          </div>
+          <div class="row">
+            <div class="two wide column">
+            </div>
+            <div class="three wide column">
+              {% block sidecontent %} {% endblock %}
+            </div>
+            <div class="nine wide column">
+              {% block content %} {% endblock %}
+            </div>
+            <div class="two wide column">
+            </div>
         </div>
     </div>
   </div>
