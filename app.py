@@ -13,16 +13,33 @@ app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+
 class LoginForm(FlaskForm):
     email = EmailField('Email', [DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
 
+
 @app.route("/")
-def hello():
+def home():
     tasks = get_all_tasks()
     for task in tasks:
         task.user_info = get_user_by_id(task.user)
     return render_template("homepage.html", tasks=tasks)
+
+
+@app.route("/login", methods=["GET"])
+def login():
+    login_form = LoginForm()
+    return render_template("login.html", login_form=login_form)
+
+
+@app.route("/login", methods=["POST"])
+def login_post():
+    login_form = LoginForm()
+    if login_form.validate_on_submit():
+        return redirect('/')
+
+    return render_template("login.html", login_form=login_form)
 
 
 @app.route("/task")
