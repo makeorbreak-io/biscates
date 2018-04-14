@@ -4,7 +4,7 @@ from models import Users
 
 
 def get_all_tasks():
-    tasks = Tasks.query.filter_by(approved=False).order_by(Tasks.created_at).all()
+    tasks = Tasks.query.filter_by(approved=False).order_by(Tasks.created_at).limit(10).all()
     return tasks
 
 def get_user_by_id(id):
@@ -12,5 +12,5 @@ def get_user_by_id(id):
     return user
 
 def get_task(id):
-    task = Task.query.get(id)
+    task = Tasks.query.get(id)
     return task

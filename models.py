@@ -55,7 +55,7 @@ class Tasks(db.Model):
         self.type = type
 
     def __repr__(self):
-        return '<id {} title {} type {} approved {} user {} location {} >'.format(self.id, self.title, self.type, self.approved, self.user, self.location)
+        return '<id {} title {} type {} approved {} user {} location {} description {}>'.format(self.id, self.title, self.type, self.approved, self.user, self.location, self.description)
 
 
 class Ratings(db.Model):
