@@ -37,29 +37,21 @@
         <br>
         <div class="main ui container">
 
-            {% set tasks = [
-            ["title","category","aprovado","Jorge Jesus","http://www2.pictures.zimbio.com/gi/Real+Madrid+CF+v+Sporting+Clube+de+Portugal+QSMFTsZhHuml.jpg"]
-            ,["title","category","aprovado","Jorge Jesus","http://www2.pictures.zimbio.com/gi/Real+Madrid+CF+v+Sporting+Clube+de+Portugal+QSMFTsZhHuml.jpg"]
-            ,["title","category","aprovado","Jorge Jesus","http://www2.pictures.zimbio.com/gi/Real+Madrid+CF+v+Sporting+Clube+de+Portugal+QSMFTsZhHuml.jpg"]
-            ,["title","category","aprovado","Jorge Jesus","http://www2.pictures.zimbio.com/gi/Real+Madrid+CF+v+Sporting+Clube+de+Portugal+QSMFTsZhHuml.jpg"]
-
-            ]
-            %}
             {% for task in tasks %}
 
             <a class="ui fluid card " href="http://www.dog.com">
                 <div class="content">
-                    <div class="header">{{task[0]}}</div>
+                    <div class="header">{{task.title}}</div>
                     <div class="meta">
-                        <span class="category">{{task[1]}}</span>
+                        <span class="category">{{task.type}}</span>
                     </div>
                     <div class="description">
-                        <p>{{task[2]}}</p>
+                        <p>{{task.approved}}</p>
                     </div>
                 </div>
                 <div class="extra content">
                     <div class="right floated author">
-                        <img class="ui  avatar big image" src={{task[4]}}> {{task[3]}}
+                        <img class="ui  avatar big image" src={{task.user_info.photo}}> {{task.user_info.name}}
                     </div>
                 </div>
             </a>
