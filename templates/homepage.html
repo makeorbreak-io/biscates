@@ -1,37 +1,32 @@
 {% extends "base.html" %}
 
+{% block sidecontent %}
+    <div class="ui visible inverted left vertical menu push">
+      <div class="ui item search">
+          <div class="ui icon input">
+              <input class="prompt" placeholder="Procurar biscates..." type="text">
+              <i class="search icon"></i>
+          </div>
+          <div class="results"></div>
+      </div>
+
+      {% set types = ["Canalizações","Portas"] %}
+      {% for type in types %}
+
+      <a class="item">
+          {{ type }}
+      </a>
+      {% endfor %}
+  </div>
+{% endblock %}
+
 {% block content %}
-<div class="ui bottom ">
-    <div class="ui visible inverted left vertical sidebar menu push">
-
-        <div class="ui item search">
-            <div class="ui icon input">
-                <input class="prompt" placeholder="Procurar biscates..." type="text">
-                <i class="search icon"></i>
-            </div>
-            <div class="results"></div>
-        </div>
-
-        {% set types = ["Canalizações","Portas"] %}
-        {% for type in types %}
-
-        <a class="item">
-            {{ type }}
-        </a>
-        {% endfor %}
-
-
-    </div>
     <div class="article">
-
         <br>
-
         <div class="ui masthead container">
             <h1 class="ui header">Os Biscates mais recentes...</h1>
         </div>
-
         <br>
-
         <div class="main ui container">
 
             {% set tasks = [
@@ -62,8 +57,7 @@
             </a>
 
             {% endfor %}
-            
+
         </div>
     </div>
-</div>
 {% endblock %}

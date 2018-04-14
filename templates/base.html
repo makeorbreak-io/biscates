@@ -2,20 +2,50 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Biscate.</title>
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/base.css') }}">
-    <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.1/dist/semantic.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.1/dist/semantic.min.js"></script>
-    {% block head %} {% endblock %}
+  <meta charset="UTF-8">
+  <title>Biscate.</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/base.css') }}">
+  <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.1/dist/semantic.min.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" gcrossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.1/dist/semantic.min.js"></script>
+  <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+{% block head %} {% endblock %}
 </head>
 
 <body>
-<div id="content">
-    {% block content %} {% endblock %}
-</div>
+  <div class="ui top menu nav">
+    <div class="header item">
+      Biscates.
+    </div>
+    <div class="right menu">
+      <a class="item" onClick="openLoginModal()">Entrar</a>
+      <a class="item">Registar</a>
+    </div>
+
+    <div id="login-modal" class="ui modal">
+      <div class="header">Header</div>
+    </div>
+  </div>
+
+  <div class="pushable">
+    <div id="content" class="pusher">
+
+        <div class="ui grid">
+          <div class="two wide column">
+          </div>
+          <div class="four wide column">
+            {% block sidecontent %} {% endblock %}
+          </div>
+          <div class="eight wide column">
+            {% block content %} {% endblock %}
+          </div>
+          <div class="two wide column">
+          </div>
+        </div>
+    </div>
+  </div>
 
 </body>
 </html>
