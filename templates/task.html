@@ -45,11 +45,9 @@
     <h2>Proposta</h2>
     <div class="ui segment">
 
-        <form id="newproposal_form" class="ui form" method="POST" action="/">
-            {{ newproposal_form }}
-
-            <div class="field" display="hidden">
-                {{ newproposal_form.user.label }} {{ login_form.email(size=20) }}
+        <form id="newproposal_form" class="ui form" method="POST" action="/proposal">
+            <div class="field" hidden>
+                {{ newproposal_form.user.label }} {{ newproposal_form.user(value=123456) }}
             </div>
 
             <div class="field">
@@ -60,13 +58,16 @@
                 {{ newproposal_form.description.label }} {{ newproposal_form.description(size=200) }}
             </div>
 
-            <div class="field" display="hidden">
-                {{ newproposal_form.task_id.label }} {{ newproposal_form.task_id=task.id }}
+            <div class="field" hidden>
+                {{ newproposal_form.task_id.label }} {{task.id}}
             </div>
 
-            <div class="field" display="hidden">
-                {{ newproposal_form.type.label }} {{ newproposal_form.type='create' }}
+            <div class="field" hidden>
+                {{ newproposal_form.type.label }} {{ newproposal_form.type(value='create') }}
             </div>
+
+            <input type="submit" value="Criar" class="ui button" />
+
         </form>
 
 

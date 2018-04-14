@@ -2,7 +2,7 @@ import os
 from flask import Flask, render_template, jsonify, redirect, url_for, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
-from wtforms import TextField, PasswordField
+from wtforms import StringField,TextField, PasswordField
 from wtforms.validators import DataRequired, Email, EqualTo
 from wtforms.fields.html5 import EmailField
 from controllers.task_controller import *
@@ -27,7 +27,7 @@ class NewProposalForm(FlaskForm):
     user = StringField('Utilizador', [DataRequired()])
     offer = StringField('Preço', [DataRequired()])
     description = TextField('Descrição', [DataRequired()])
-    task_id = StringField('taskID',[DataRequired()])
+    task_id = StringField('task_id',[DataRequired()])
     type = StringField('type', [DataRequired()])
 
 
@@ -79,23 +79,31 @@ def taks():
 def profile():
     return render_template("profile.html")
 
+
 @app.route("/proposal", methods=['POST'])
 def offer():
-       if request.method == 'POST':
-
             type = request.args.get('type')
+            print(request.args)
 
-            if type == 'create':
 
+
+            if type is 'create':
+                taskID = request.args.get(task_id)
                 user = request.args.get('user')
                 offer = request.args.get('offer')
                 description = request.args.get('description')
-                insertProposal(taskID, user, offer, description)
+                msg = insertProposal(taskID, user, offer, description)
+                print("lol")
+                taskID = "/task?id=" + taskID
+                return redirect(taskID)
 
             else:
-
+                print("benfas")
+                print(type)
                 proposalID = request.args.get('proposalID')
-                response = updateProposal(proposalID, type)
+                msg = updateProposal(proposalID, type)
+                return redirect("/task?id=" + "123456")
+
 
 
 
