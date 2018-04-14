@@ -6,6 +6,8 @@ from wtforms import TextField, PasswordField
 from wtforms.validators import DataRequired, Email
 from wtforms.fields.html5 import EmailField
 from controllers.task_controller import *
+from controllers.proposal_controller import *
+
 
 
 app = Flask(__name__)
@@ -17,6 +19,15 @@ db = SQLAlchemy(app)
 class LoginForm(FlaskForm):
     email = EmailField('Email', [DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
+
+class NewProposalForm(FlaskForm):
+    user = StringField('Utilizador', [DataRequired()])
+    offer = StringField('Preço', [DataRequired()])
+    description = TextField('Descrição', [DataRequired()])
+    task_id = StringField('taskID',[DataRequired()])
+    type = StringField('type', [DataRequired()])
+
+
 
 @app.route("/")
 def hello():
@@ -34,7 +45,8 @@ def login():
 
 @app.route("/task")
 def taks():
-    return render_template("task.html")
+    newproposal_form = NewProposalForm()
+    return render_template("task.html", newproposal_form=newproposal_form)
 
 
 @app.route("/profile")
