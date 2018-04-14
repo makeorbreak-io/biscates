@@ -69,7 +69,7 @@ def insertProposal(taskID, user, offer, description):
         db.session.commit()
         return jsonify({"status": 203, "msg": "Proposta guardada"})
 
-    except:
-
+    except Exception as  e:
+        print(e)
         db.session.rollback()
         return jsonify({"status": 400, "msg": "Erro ao guardar proposta"})
