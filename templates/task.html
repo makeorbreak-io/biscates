@@ -1,8 +1,58 @@
 {% extends "base.html" %}
 
-{% block content %}
-<div class="main ui container">
 
+
+{% block sidecontent %}
+<script src="{{ url_for('static', filename='js/profile.js') }}"></script>
+<br/>
+<div class="ui row">
+    <img class="ui massive avatar image" style="width: 200px; height: 200px; object-fit: cover;" src="http://www2.pictures.zimbio.com/gi/Real+Madrid+CF+v+Sporting+Clube+de+Portugal+QSMFTsZhHuml.jpg" />
+</div>
+<br/>
+<div class="ui row">
+    <h2>Jorge Jesus <i class="check circle icon blue"></i></h2>
+    <p>
+        <i class="at icon grey"></i> adorochiclas@trident.com
+    </p>
+    <p>
+        <i class="phone icon grey"></i> 912 259 789
+    </p>
+    <p>
+        <i class="map pin icon grey"></i> Areosa
+    </p>
+</div>
+{% endblock %}
+
+
+{% block content %}
+<div class="ui row">
+    <div class="ui eight wide column">
+        <br>
+        <h2>Biscate</h2>
+        {% set task =
+        ["title","category","aprovado","Jorge Jesus","http://www2.pictures.zimbio.com/gi/Real+Madrid+CF+v+Sporting+Clube+de+Portugal+QSMFTsZhHuml.jpg"]%}
+        <a class="ui fluid card " href="http://www.dog.com">
+            <div class="content">
+                <div class="header">{{task[0]}}</div>
+                <div class="meta">
+                    <span class="category">{{task[1]}}</span>
+                </div>
+                <div class="description">
+                    <p>{{task[2]}}</p>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+<br/>
+<div class="ui row">
+    <h2>Proposta</h2>
+    <div class="ui segment">
+        <button class="ui positive button">
+            <i class="small plus icon"> </i>
+            Adicionar Proposta
+        </button>
+    </div>
     {% set tasks = [
     ["title","category","aprovado","Jorge Jesus","http://www2.pictures.zimbio.com/gi/Real+Madrid+CF+v+Sporting+Clube+de+Portugal+QSMFTsZhHuml.jpg","22"]
     ,["title","category","aprovado","Jorge Jesus","http://www2.pictures.zimbio.com/gi/Real+Madrid+CF+v+Sporting+Clube+de+Portugal+QSMFTsZhHuml.jpg","12"]
@@ -45,8 +95,8 @@
             </div>
         </div>
     </div>
-
     {% endfor %}
 </div>
+
 
 {% endblock %}
