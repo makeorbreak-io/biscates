@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, jsonify, redirect, url_for
+from flask import Flask, render_template, jsonify, redirect, url_for, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from wtforms import TextField, PasswordField
@@ -25,15 +25,12 @@ def hello():
     return render_template("homepage.html", tasks=tasks)
 
 
-@app.route("/login")
-def login():
-    login_form = LoginForm()
-    return render_template("login.html", login_form=login_form)
-
-
 @app.route("/task")
 def taks():
-    return render_template("task.html")
+    task_id = request.args.get('id')
+    task = get_task(task_id)
+    task.user_info = get_user_by_id(task.user)
+    return render_template("task.html", task=task)
 
 
 @app.route("/profile")
