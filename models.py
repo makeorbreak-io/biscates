@@ -29,7 +29,7 @@ class Users(db.Model):
         self.password = password
 
     def __repr__(self):
-        return '<id {}>'.format(self.id)
+        return '<id {} name {} email {} photo {} address {} contact {} certified {}>'.format(self.id, self.email, self.photo, self.address, self.contact, self.certified)
 
 
 class Tasks(db.Model):

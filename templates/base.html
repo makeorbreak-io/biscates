@@ -20,8 +20,8 @@
       Biscates.
     </a>
     <div class="right menu">
-      <a class="item">Entrar</a>
-      <a class="item">Registar</a>
+      <a class="item" href="/login">Entrar</a>
+      <a class="item" href="/register">Registar</a>
     </div>
   </div>
 
@@ -33,11 +33,10 @@
           <div class="row">
             <div class="two wide column">
             </div>
-            <div class="three wide column">
-              {% block sidecontent %} {% endblock %}
-            </div>
-            <div class="nine wide column">
-              {% block content %} {% endblock %}
+            <div class="twelve wide column">
+              <div class="ui grid">
+                  {% block body %} {% endblock %}
+              </div>
             </div>
             <div class="two wide column">
             </div>
