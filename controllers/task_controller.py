@@ -40,9 +40,6 @@ def update_proposal(proposalID, type):
 
     proposal = Proposals.query.filter_by(id=proposalID).first()
 
-    print ("update Proposal")
-    print(proposalID)
-
     status = 200
     msg = "Proposta aceite"
 
@@ -50,7 +47,6 @@ def update_proposal(proposalID, type):
 
      if type == 'accept':
         proposal.accepted = True
-        print(proposal)
         db.session.commit()
 
      elif  type == 'reject':
@@ -66,8 +62,6 @@ def update_proposal(proposalID, type):
 def insertProposal(taskID, user, offer, description):
 
     proposal = Proposals(user, offer, description, False, taskID)
-
-    print(proposal)
 
     try:
 

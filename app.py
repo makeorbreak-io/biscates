@@ -93,11 +93,17 @@ def task(task_id):
 @app.route("/profile/<user_id>")
 def profile(user_id):
     id = float(user_id)
+
+    show_info_div = False
+
+    if request.form[sucess] :
+        show_info_div = True
+
     user = get_user_by_id(id)
     tasks = get_user_tasks(id)
     for task in tasks:
         task.rating = get_task_rating(task.id)
-    return render_template("profile.html", user=user, tasks=tasks)
+    return render_template("profile.html", user=user, tasks=tasks, show_info_div=show_info_div)
 
 
 @app.route("/proposal", methods=['POST'])
@@ -111,7 +117,7 @@ def proposal():
                 offer = request.form.get('offer')
                 description = request.form.get('description')
                 msg = insertProposal(taskID, user, offer, description)
-                return redirect("/task?id=" + taskID)
+                return redirect("/task/" + taskID + "?status=aceite")
 
             else:
                 proposalID = request.form.get('proposalID')
