@@ -4,10 +4,10 @@
 <form id="login-form" class="ui form" method="POST" action="/login">
   {{ login_form.csrf_token }}
   <div class="required field">
-    {{ login_form.email.label }} {{ login_form.email(size=20) }}
+    {{ login_form.email.label }} {{ login_form.email(size=24) }}
   </div>
   <div class="required field">
-    {{ login_form.password.label }} {{ login_form.password(size=20) }}
+    {{ login_form.password.label }} {{ login_form.password(size=24) }}
   </div>
   <input type="submit" value="Entrar" class="ui button" />
 </form>

@@ -3,7 +3,7 @@ from flask import Flask, render_template, jsonify, redirect, url_for, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from wtforms import TextField, PasswordField
-from wtforms.validators import DataRequired, Email
+from wtforms.validators import DataRequired, Email, EqualTo
 from wtforms.fields.html5 import EmailField
 from controllers.task_controller import *
 
@@ -23,8 +23,8 @@ class RegisterForm(FlaskForm):
     email = EmailField('Email', [DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     confirm_password = PasswordField('Confirmar Password', validators=[
-        validators.DataRequired(),
-        validators.EqualTo('password', message='Passwords devem ser idênticas')
+        DataRequired(),
+        EqualTo('password', message='Passwords devem ser idênticas')
     ])
 
 
