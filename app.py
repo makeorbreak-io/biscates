@@ -67,7 +67,12 @@ def taks():
 
 @app.route("/profile")
 def profile():
-    return render_template("profile.html")
+    user_id = request.args.get('id')
+    user = get_user_by_id(user_id)
+    tasks = get_user_tasks(user_id)
+    for task in tasks:
+        task.rating = get_task_rating(task.id)
+    return render_template("profile.html", user=user, tasks=tasks)
 
 
 if __name__ == '__main__':
