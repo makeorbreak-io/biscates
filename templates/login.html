@@ -1,0 +1,17 @@
+{% extends "body-nosidebar.html" %}
+
+{% block content %}
+<form id="login-form" class="ui form" method="POST" action="/">
+  {{ login_form.csrf_token }}
+  <div class="field">
+    {{ login_form.email.label }} {{ login_form.email(size=20) }}
+  </div>
+  <div class="field">
+    {{ login_form.password.label }} {{ login_form.password(size=20) }}
+  </div>
+  <div class="ui error message">
+    <div class="header">Action Forbidden</div>
+    <p>You can only sign up for an account once with a given e-mail address.</p>
+  </div>
+</form>
+{% endblock %}

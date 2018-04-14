@@ -25,6 +25,12 @@ def hello():
     return render_template("homepage.html", tasks=tasks)
 
 
+@app.route("/login")
+def login():
+    login_form = LoginForm()
+    return render_template("login.html", login_form=login_form)
+
+
 @app.route("/task")
 def taks():
     return render_template("task.html")
