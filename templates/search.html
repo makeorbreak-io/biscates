@@ -41,15 +41,15 @@
                 <div class="content">
                     <div class="header">{{task.title}}</div>
                     <div class="meta">
-                        <span class="category">{{task.type}}</span>
+                        <span class="category">{{task.type.name}}</span>
                     </div>
                     <div class="description">
-                        <p>{{task.approved}}</p>
+                        <p>{{task.approved}} - Outra vez</p>
                     </div>
                 </div>
                 <div class="extra content">
                     <div class="right floated author">
-                        <img class="ui  avatar big image" src={{task.user_info.photo}}> {{task.user_info.name}}
+                        <img class="ui  avatar big image" src={{task.user_info.photo or 'https://dt.azadicdn.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png?200'}}> {{task.user_info.name}}
                     </div>
                 </div>
             </div>

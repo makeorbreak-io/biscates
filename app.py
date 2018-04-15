@@ -66,6 +66,7 @@ def login():
 
         if user_id:
             session['id'] = user_id
+            session['name'] = get_user_name(user_id)
             return redirect(url_for('home'))
         else:
             login_form.password.errors = ['Login error']
@@ -77,6 +78,7 @@ def login():
 @app.route("/logout", methods=["GET"])
 def logout():
     session['id'] = None
+    session['name'] = None
     return redirect(url_for('home'))
 
 
@@ -98,6 +100,7 @@ def register():
             user_id = register_user(email, name, password)
             if user_id:
                 session['id'] = user_id
+                session['name'] = get_user_name(user_id)
                 return redirect(url_for('home'))
             else:
                 register_form.confirm_password.errors = ['Erro a registar utilizador.']

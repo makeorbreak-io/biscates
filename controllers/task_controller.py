@@ -40,6 +40,10 @@ def validate_login(email, password):
         return user.id
     return None
 
+def get_user_name(id):
+    user = get_user_by_id(id)
+    names = user.name.split(" ")
+    return names[0]
 
 def register_user(email, name, password):
     hash_object = hashlib.sha256(password.encode('utf-8'))
