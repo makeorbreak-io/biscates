@@ -107,7 +107,7 @@
             </div>
 
             {% if session['id'] == task.user and accepted == False %}
-            <div id="changeProposeStatus" class="left ui buttons">
+            <div class="left ui buttons changeProposeStatus">
                 {{task}}
                 <button class="ui positive button" onClick="acceptProposal({{proposal.id}})">
                     <i class="small check icon"> </i>

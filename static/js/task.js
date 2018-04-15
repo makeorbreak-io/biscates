@@ -2,6 +2,7 @@ function acceptProposal(proposalID) {
     hideInfoProposal();
     var jqxhr = $.post( "/proposal", {type: 'accept',proposalID: proposalID}, function() {
         showInfoProposal("A sua acção foi registada")
+        hideChangePropose()
     }).done(function() {
 
     })
@@ -15,6 +16,7 @@ function rejectProposal(proposalID) {
     hideInfoProposal();
     var jqxhr = $.post( "/proposal", {type: 'reject',proposalID: proposalID}, function() {
        showInfoProposal("A sua acção foi registada")
+       hideChangePropose()
     })
     .done(function() {
 
@@ -43,6 +45,10 @@ function rate(rate, from_user, to_user, task_id) {
     })
     .always(function() {
     });
+}
+
+function hideChangePropose() {
+    $(".changeProposeStatus").hide()
 }
 
 $(document).ready(function () {
