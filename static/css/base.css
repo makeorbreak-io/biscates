@@ -14,9 +14,21 @@
 .ui.menu.nav .header {
   font-size: 2rem;
   padding: 0 68px;
+  color: #0d016b;
+}
+
+.ui.menu.nav .header:hover{
+  font-size: 2rem;
+  padding: 0 68px;
+  color: #0d016b;
 }
 
 #search i {
   cursor: pointer;
   pointer-events: all; !important
+}
+
+.sides {
+  background-color: #000;
+  height: 100%;
 }
