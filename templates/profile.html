@@ -16,9 +16,9 @@
   <p>
     <i class="map pin icon grey"></i> {{user.address}}
   </p>
-  <p>
-      Classification: {{ average }}
-  </p>
+  <h4>
+      Classificação: <span class='ui rating average' data-rating={{average}} data-max-rating="5"></span>
+  </h4>
 </div>
 {% endblock %} {% block content %}
 <div class="ui row">
@@ -48,9 +48,11 @@
         <p>{{task.description}}</p>
       </div>
     </div>
+    {% if task.approved %} {% if task.rating.value is not none %}
     <div class="extra content right aligned">
-      <div class='ui rating' data-rating={{task.rating.value}} data-max-rating="5"></div>
+      <div class='ui rating specific' data-rating={{task.rating.value}} data-max-rating="5"></div>
     </div>
+    {% endif %} {% endif %}
   </a>
   {% endfor %}
 </div>
