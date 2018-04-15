@@ -32,6 +32,11 @@ class RegisterForm(FlaskForm):
         DataRequired(),
         EqualTo('password', message='Passwords devem ser idênticas')
     ])
+    photo = StringField('URL da foto')
+    address = StringField('Localização')
+    contact = StringField('Contacto')
+    description = StringField('Descrição')
+
 
 
 class NewProposalForm(FlaskForm):
@@ -43,10 +48,10 @@ class NewProposalForm(FlaskForm):
 
 
 class TaskForm(FlaskForm):
-    title = StringField('Job Title')
-    location = StringField('Location')
-    price = StringField('Proposed Price')
-    description = StringField('Job Description')
+    title = StringField('Nome do Trabalho')
+    location = StringField('Localização')
+    price = StringField('Preço Desejado')
+    description = StringField('Descrição do Trabalho')
 
 
 @app.route("/")
@@ -92,6 +97,11 @@ def register():
         name = request.form['name']
         password = request.form['password']
         confirm_password = request.form['confirm_password']
+        photo = request.form['photo']
+        address = request.form['address']
+        contact = request.form['contact']
+        description = request.form['description']
+        print(photo)
 
         user = get_user_by_email(email)
         if user:
@@ -99,7 +109,7 @@ def register():
             return render_template('register.html',
                                    register_form=register_form)
         else:
-            user_id = register_user(email, name, password)
+            user_id = register_user(email, name, password, photo, address, contact, description)
             if user_id:
                 session['id'] = user_id
                 session['name'] = get_user_name(user_id)

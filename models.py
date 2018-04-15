@@ -30,10 +30,14 @@ class Users(db.Model):
     updated_at = db.Column(DateTime(timezone=True), onupdate=func.now())
     description = db.Column(db.String())
 
-    def __init__(self, name, email, password):
+    def __init__(self, name, email, password, photo, address, contact, description):
         self.name = name
         self.email = email
         self.password = password
+        self.photo = photo
+        self.address = address
+        self.contact = contact
+        self.description = description
 
     def __repr__(self):
         return ('<id {} name {} email {} photo {} address {} contact'

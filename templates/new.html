@@ -2,39 +2,45 @@
 
 {% block content %}
 <script src="{{ url_for('static', filename='js/task.js') }}"></script>
-
-<form method="POST" class="ui form create-task" action="/new">
-    {{ task_form.csrf_token }}
-    <div class="required field">
-        {{ task_form.title.label }} {{ task_form.title(size=30, required=required) }}
-    </div>
-
-    <div class="required field">
-        {{ task_form.location.label }} {{ task_form.location(size=30, required=required) }}
-    </div>
-
-    <div class="required field">
-        {{ task_form.price.label }} {{ task_form.price(size=30, required=required) }}
-    </div>
-
-    <div class="field">
-        {{ task_form.description.label }} {{ task_form.description(size=30) }}
-    </div>
-
-    <div class="ui selection dropdown">
-        <input required name="type" type="hidden">
-        <i class="dropdown icon"></i>
-        <div class="default text">Job Type</div>
-        <div class="menu">
-            {% for type in task_types %}
-                <div class="item" data-value="{{type}}">{{ type }}</div>
-            {% endfor %}
+<div class="ui six wide column"></div>
+<div class="ui four wide column">
+    <h1> Criar novo Biscate </h2>
+    <form method="POST" class="ui form create-task" action="/new">
+        {{ task_form.csrf_token }}
+        <div class="required field">
+            {{ task_form.title.label }} {{ task_form.title(size=50, required=required) }}
         </div>
-    </div>
 
-    <input disabled type="submit" value="Go">
-</form>
+        <div class="required field">
+            {{ task_form.location.label }} {{ task_form.location(size=50, required=required) }}
+        </div>
 
+        <div class="required field">
+            {{ task_form.price.label }} {{ task_form.price(size=50, required=required) }}
+        </div>
+
+        <div class="field">
+            {{ task_form.description.label }} {{ task_form.description(size=50) }}
+        </div>
+
+        <div class="ui selection dropdown" style="width: 100%;">
+            <input required name="type" type="hidden">
+            <i class="dropdown icon"></i>
+            <div class="default text">Job Type</div>
+            <div class="menu">
+                {% for type in task_types %}
+                <div class="item" data-value="{{type}}">{{ type }}</div>
+                {% endfor %}
+            </div>
+        </div>
+        <br>
+        <div style="margin: auto; text-align: center; margin-top: 30px;">
+            <input style="width: 30%; height: 40px; " disabled type="submit" value="Go">
+        </div>
+    </form>
+</div>
+
+<div class="ui six wide column"></div>
 
 
 {% endblock %}

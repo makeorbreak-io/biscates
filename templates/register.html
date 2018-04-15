@@ -1,44 +1,65 @@
 {% extends "body-nosidebar.html" %}
 
 {% block content %}
-<form id="register-form" class="ui form" method="POST" action="/register">
-  {{ register_form.csrf_token }}
-  <div class="required field">
-    {{ register_form.name.label }} {{ register_form.name(size=24, required=required) }}
-  </div>
-  {% if register_form.name.errors %}
-    <div class="ui error message">
-      <div class="header">Erro</div>
-      <p>{{ register_form.name.errors[0] }}</p>
-    </div>
-  {% endif %}
-  <div class="required field">
-    {{ register_form.email.label }} {{ register_form.email(size=24, required=required) }}
-  </div>
-  {% if register_form.email.errors %}
-    <div class="ui error message">
-      <div class="header">Erro</div>
-      <p>{{ register_form.email.errors[0] }}</p>
-    </div>
-  {% endif %}
-  <div class="required field">
-    {{ register_form.password.label }} {{ register_form.password(size=24, required=required) }}
-  </div>
-  {% if register_form.password.errors %}
-    <div class="ui error message">
-      <div class="header">Erro</div>
-      <p>{{ register_form.password.errors[0] }}</p>
-    </div>
-  {% endif %}
-  <div class="required field">
-    {{ register_form.confirm_password.label }} {{ register_form.confirm_password(size=24, required=required) }}
-  </div>
-  {% if register_form.confirm_password.errors %}
-    <div class="ui error message">
-      <div class="header">Erro</div>
-      <p>{{ register_form.confirm_password.errors[0] }}</p>
-    </div>
-  {% endif %}
-  <input type="submit" value="Registar" class="ui button" />
-</form>
+<div class="ui six wide column"></div>
+<div class="ui four wide column">
+    <h1> Registar </h1>
+    <form id="register-form" class="ui form" method="POST" action="/register">
+      {{ register_form.csrf_token }}
+      <div class="required field">
+        {{ register_form.name.label }} {{ register_form.name(size=24, required=required) }}
+      </div>
+      {% if register_form.name.errors %}
+        <div class="ui error message">
+          <div class="header">Erro</div>
+          <p>{{ register_form.name.errors[0] }}</p>
+        </div>
+      {% endif %}
+      <div class="required field">
+        {{ register_form.email.label }} {{ register_form.email(size=24, required=required) }}
+      </div>
+      {% if register_form.email.errors %}
+        <div class="ui error message">
+          <div class="header">Erro</div>
+          <p>{{ register_form.email.errors[0] }}</p>
+        </div>
+      {% endif %}
+      <div class="required field">
+        {{ register_form.password.label }} {{ register_form.password(size=24, required=required) }}
+      </div>
+      {% if register_form.password.errors %}
+        <div class="ui error message">
+          <div class="header">Erro</div>
+          <p>{{ register_form.password.errors[0] }}</p>
+        </div>
+      {% endif %}
+      <div class="required field">
+        {{ register_form.confirm_password.label }} {{ register_form.confirm_password(size=24, required=required) }}
+      </div>
+      <div class="required field">
+        {{ register_form.address.label }} {{ register_form.address(size=24, required=required) }}
+      </div>
+      <div class="required field">
+        {{ register_form.contact.label }} {{ register_form.contact(size=24, required=required) }}
+      </div>
+      <div class="field">
+        {{ register_form.description.label }} {{ register_form.description(size=24) }}
+      </div>
+      <div class="field">
+        {{ register_form.photo.label }} {{ register_form.photo(size=150) }}
+      </div>
+      {% if register_form.confirm_password.errors %}
+        <div class="ui error message">
+          <div class="header">Erro</div>
+          <p>{{ register_form.confirm_password.errors[0] }}</p>
+        </div>
+      {% endif %}
+      <div style="text-align: center;">
+          <input type="submit" value="Registar" class="ui button" />
+      </div>
+    </form>
+</div>
+<div class="ui six wide column"></div>
+
+
 {% endblock %}
