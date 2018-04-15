@@ -48,7 +48,7 @@ def register_user(email, name, password):
         db.session.rollback()
         return False
 
-    return True
+    return user.id
 
 def get_proposals(task_id):
     proposals = Proposals.query.filter_by(task=task_id).all()

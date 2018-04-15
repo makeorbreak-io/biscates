@@ -71,6 +71,12 @@ def login():
     return render_template("login.html", login_form=login_form)
 
 
+@app.route("/logout", methods=["GET"])
+def logout():
+    session['id'] = None
+    return redirect(url_for('home'))
+
+
 @app.route("/register", methods=["GET", "POST"])
 def register():
     register_form = RegisterForm()

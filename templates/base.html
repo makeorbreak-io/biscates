@@ -20,8 +20,13 @@
       Biscates.
     </a>
     <div class="right menu">
+      {% if session['id'] %}
+      <a class="item" href="/profile/{{ session['id'] }}">Perfil</a>
+      <a class="item" href="/logout">Sair</a>
+      {% else %}
       <a class="item" href="/login">Entrar</a>
       <a class="item" href="/register">Registar</a>
+      {% endif %}
     </div>
   </div>
 
