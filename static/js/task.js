@@ -1,10 +1,9 @@
 function acceptProposal(proposalID) {
     hideInfoProposal();
-
     var jqxhr = $.post( "/proposal", {type: 'accept',proposalID: proposalID}, function() {
-        console.log(proposalID);
-    }).done(function() {
         showInfoProposal("A sua acção foi registada")
+    }).done(function() {
+
     })
     .fail(function(e) {
         showInfoProposal("Por favor, tente mais tarde")
@@ -15,10 +14,10 @@ function acceptProposal(proposalID) {
 function rejectProposal(proposalID) {
     hideInfoProposal();
     var jqxhr = $.post( "/proposal", {type: 'reject',proposalID: proposalID}, function() {
-
+       showInfoProposal("A sua acção foi registada")
     })
     .done(function() {
-        showInfoProposal("A sua acção foi registada")
+
     })
     .fail(function(e) {
         showInfoProposal("Por favor, tente mais tarde")
@@ -47,6 +46,7 @@ function rate(rate, from_user, to_user, task_id) {
 }
 
 $(document).ready(function () {
+    hideInfoProposal();
     $('.ui.rating').rating('setting', 'onRate', function(value) {
         from_user = $('.rating').data('from');
         to_user = $('.rating').data('to');
