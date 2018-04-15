@@ -29,8 +29,12 @@
 }
 
 .sides {
-  background-color: #000;
+  background-color: #ECEFF1;
   height: 100%;
+}
+
+.middle {
+  background-color: #FFFFFF;
 }
 
 .body-row {
