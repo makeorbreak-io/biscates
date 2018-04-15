@@ -125,8 +125,8 @@ def profile(user_id):
 
     show_info_div = False
 
-    if request.form[sucess] :
-        show_info_div = True
+    #if request.form[sucess]:
+    show_info_div = True
 
     user = get_user_by_id(id)
     tasks = get_user_tasks(id)
