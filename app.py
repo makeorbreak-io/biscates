@@ -76,7 +76,7 @@ def login():
 @app.route("/logout", methods=["GET"])
 def logout():
     session['id'] = None
-    return redirect(url_for('home')
+    return redirect(url_for('home'))
 
 
 
@@ -137,22 +137,22 @@ def profile(user_id):
 @app.route("/proposal", methods=['POST'])
 
 def proposal():
-            type = request.form.get('type')
+    type = request.form.get('type')
 
-            if 'create' == type:
-                taskID = request.form.get('task_id')
-                user = request.form.get('user')
-                offer = request.form.get('offer')
-                description = request.form.get('description')
-                msg = insertProposal(taskID, user, offer, description)
+    if 'create' == type:
+        taskID = request.form.get('task_id')
+        user = request.form.get('user')
+        offer = request.form.get('offer')
+        description = request.form.get('description')
+        msg = insertProposal(taskID, user, offer, description)
 
-                return redirect("/task/" + taskID + "?status=aceite")
+        return redirect("/task/" + taskID + "?status=aceite")
 
 
-            else:
-                proposalID = request.form.get('proposalID')
-                msg = update_proposal(proposalID, type)
-                return msg
+    else:
+        proposalID = request.form.get('proposalID')
+        msg = update_proposal(proposalID, type)
+        return msg
 
 
 @app.route("/new", methods=["GET"])
@@ -190,11 +190,11 @@ def new_task_post():
 
         try:
             task = Tasks(title = title,
-                location = location,
-                price = price,
-                description = description,
-                user = user,
-                type = type)
+                         location = location,
+                         price = price,
+                         description = description,
+                         user = user,
+                         type = type)
             print("USER:")
             print(user)
             db.session.add(task)
