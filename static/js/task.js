@@ -9,7 +9,7 @@ function acceptProposal(proposalID) {
         .fail(function(e) {
             showInfoProposal("Por favor, tente mais tarde")
         })
-}
+
 
 function rejectProposal(proposalID) {
     hideInfoProposal();
@@ -34,6 +34,12 @@ function hideInfoProposal() {
         $("#infoNewPropose").hide();
 }
 
-$(document).ready(function () {
 
+
+$(document).ready(function () {
+    $('.ui.dropdown').dropdown({
+        onChange: function(){
+            $('.create-task > input').removeAttr('disabled');
+        }
+    });
 });

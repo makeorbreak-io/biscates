@@ -3,7 +3,7 @@ from models import Tasks
 from models import Users
 from models import Proposals
 from flask import jsonify
-from models import Ratings
+from models import Ratings, Type
 
 
 def get_all_tasks():
@@ -48,7 +48,7 @@ def register_user(email, name, password):
         db.session.rollback()
         return False
 
-    return True
+    return user.id
 
 def get_proposals(task_id):
     proposals = Proposals.query.filter_by(task=task_id).all()
@@ -91,3 +91,10 @@ def insertProposal(taskID, user, offer, description):
         print(e)
         db.session.rollback()
         return jsonify({"status": 400, "msg": "Erro ao guardar proposta"})
+
+
+def get_task_types():
+    types = []
+    for type in Type.__members__:
+        types.append(type)
+    return types

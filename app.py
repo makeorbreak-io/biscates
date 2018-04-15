@@ -48,10 +48,11 @@ class TaskForm(FlaskForm):
 
 @app.route("/")
 def home():
+    types = get_task_types()
     tasks = get_all_tasks()
     for task in tasks:
         task.user_info = get_user_by_id(task.user)
-    return render_template("homepage.html", tasks=tasks)
+    return render_template("homepage.html", tasks=tasks, types=types)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -147,42 +148,57 @@ def proposal():
 @app.route("/new", methods=["GET"])
 def new_task():
     task_form = TaskForm()
-    return render_template("new.html", task_form=task_form)
+    types = get_task_types()
+    return render_template("new.html", task_form=task_form, task_types=types)
 
 
 @app.route("/new", methods=["POST"])
 def new_task_post():
     task_form = TaskForm(request.form)
     title = request.form
+    types = get_task_types()
     if task_form.validate():
         title = request.form["title"]
         location = request.form["location"]
         price = float(request.form["price"])
         description = request.form["description"]
-        user = 123456 #TODO: change user ID
+        type = request.form["type"]
+        user = session["id"]
+
         try:
             task = Tasks(title = title,
                 location = location,
                 price = price,
                 description = description,
                 user = user,
-                type = "T1")
+                type = type)
+            print("USER:")
+            print(user)
             db.session.add(task)
             db.session.commit()
             link = "/task/{}".format(task.id)
             return redirect(link)
         except Exception as e:
-            return render_template("new.html", task_form=task_form)
+            db.session.rollback()
+            return render_template("new.html", task_form=task_form, task_types=types)
     else:
-        return render_template("new.html", task_form=task_form)
+        return render_template("new.html", task_form=task_form, task_types=types)
 
 @app.route("/search", methods=["GET"])
 def search():
+    types = get_task_types()
+
     search_word = request.args.get('search')
 
-    result = Tasks.query.filter(Tasks.title.like(search_word + "%")).all()
+    result = Tasks.query.filter(
+        (Tasks.title.like( "%"+search_word + "%")) |
+        (Tasks.description.like("%"+search_word + "%"))).all()
 
-    return  jsonify(result)
+    for task in result:
+        task.user_info = get_user_by_id(task.user)
+
+    return render_template("search.html", tasks=result, search_word=search_word, types=types)
+
 
 
 if __name__ == '__main__':

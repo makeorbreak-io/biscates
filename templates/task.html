@@ -43,6 +43,13 @@
 <br/>
 <div class="ui row">
 
+    {% if show_info_div %}
+     <div id="infoNewPropose" class="ui  message">
+                <div class="header">Info</div>
+                <p id="infoNewProposemsg">As alterações foram guardadas </p>
+     </div>
+    {% endif %}
+
   {% if session['id'] != task.user %}
     <h2>Proposta</h2>
     <div class="ui segment">
@@ -64,6 +71,8 @@
                 {{ newproposal_form.type.label }} {{ newproposal_form.type(value='create') }}
             </div>
             <input type="submit" value="Criar" class="ui button" />
+
+
         </form>
     </div>
 

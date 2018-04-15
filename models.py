@@ -4,9 +4,14 @@ import enum, datetime
 
 
 class Type(enum.Enum):
-    T1 = 'T1'
-    T2 = 'T2'
-    T3 = 'T3'
+    Costuraria = 'Costuraria'
+    Electricidade = 'Electricidade'
+    Canalizações = 'Canalizações'
+    Jardinagem = 'Jardinagem'
+    Limpeza = 'Limpeza'
+    Carpintaria = 'Carpintaria'
+    Pintura = 'Pintura'
+    Serralharia = 'Serralharia'
 
 
 class Users(db.Model):
