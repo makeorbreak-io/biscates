@@ -71,12 +71,6 @@ def login():
     return render_template("login.html", login_form=login_form)
 
 
-@app.route("/logout", methods=["GET"])
-def logout():
-    session['id'] = None
-    return redirect(url_for('home'))
-
-
 @app.route("/register", methods=["GET", "POST"])
 def register():
     register_form = RegisterForm()
@@ -146,35 +140,41 @@ def proposal():
 @app.route("/new", methods=["GET"])
 def new_task():
     task_form = TaskForm()
-    return render_template("new.html", task_form=task_form)
+    types = get_task_types()
+    return render_template("new.html", task_form=task_form, task_types=types)
 
 
 @app.route("/new", methods=["POST"])
 def new_task_post():
     task_form = TaskForm(request.form)
     title = request.form
+    types = get_task_types()
     if task_form.validate():
         title = request.form["title"]
         location = request.form["location"]
         price = float(request.form["price"])
         description = request.form["description"]
-        user = 123456 #TODO: change user ID
+        type = request.form["type"]
+        user = session["id"]
+
         try:
             task = Tasks(title = title,
                 location = location,
                 price = price,
                 description = description,
                 user = user,
-                type = "T1")
+                type = type)
+            print("USER:")
+            print(user)
             db.session.add(task)
             db.session.commit()
             link = "/task/{}".format(task.id)
             return redirect(link)
         except Exception as e:
-            return render_template("new.html", task_form=task_form)
+            db.session.rollback()
+            return render_template("new.html", task_form=task_form, task_types=types)
     else:
-        return render_template("new.html", task_form=task_form)
-
+        return render_template("new.html", task_form=task_form, task_types=types)
 
 
 if __name__ == '__main__':
