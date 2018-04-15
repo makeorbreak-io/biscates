@@ -136,10 +136,6 @@ def task(task_id):
 def profile(user_id):
     id = int(user_id)
 
-    show_info_div = False
-    if request.form[success]:
-        show_info_div = True
-
     user = get_user_by_id(id)
     tasks = get_user_tasks(id)
     average = get_user_average(id)
@@ -152,8 +148,7 @@ def profile(user_id):
     return render_template("profile.html",
                            user=user,
                            tasks=tasks,
-                           average=average,
-                           show_info_div=show_info_div)
+                           average=average)
 
 
 @app.route("/proposal", methods=['POST'])
