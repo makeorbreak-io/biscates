@@ -86,6 +86,7 @@
     {% endif %}
 
     {% for proposal in proposals %}
+    {% if accepted == False or  ( accepted == True and  proposal.accepted == True) %}
     <div class="ui fluid card ">
         <div class="content">
             <div class="header">{{proposal.description}}</div>
@@ -105,8 +106,8 @@
                     <img class="ui avatar big image" src={{proposal.user_info.photo or 'https://dt.azadicdn.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png?200'}}> {{proposal.user_info.name}}
             </div>
 
-            {% if session['id'] == task.user %}
-            <div class="left ui buttons">
+            {% if session['id'] == task.user and accepted == False %}
+            <div id="changeProposeStatus" class="left ui buttons">
                 {{task}}
                 <button class="ui positive button" onClick="acceptProposal({{proposal.id}})">
                     <i class="small check icon"> </i>
@@ -119,9 +120,10 @@
                 </button>
             </div>
             {% endif %}
-
         </div>
     </div>
+    {% endif %}
+
     {% endfor %}
 </div>
 
