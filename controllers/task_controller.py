@@ -7,7 +7,7 @@ from models import Ratings, Type
 
 
 def get_all_tasks():
-    tasks = Tasks.query.filter_by(approved=False).order_by(Tasks.created_at).limit(10).all()
+    tasks = Tasks.query.filter_by(approved=False).order_by(Tasks.created_at.desc()).limit(10).all()
     return tasks
 
 def get_user_by_id(id):
@@ -104,3 +104,24 @@ def get_task_types():
     for type in Type.__members__:
         types.append(type)
     return types
+
+def insert_rating(rate, task_id, from_user, to_user):
+
+    rating = get_task_rating(task_id)
+
+    if rating is not None:
+        rating.value = rate
+        db.session.commit()
+        return jsonify({"status": 203, "msg": "Rate guardado"})
+
+    rate = Ratings(rate, from_user, to_user, task_id)
+    try:
+
+        db.session.add(rate)
+        db.session.commit()
+        return jsonify({"status": 203, "msg": "Rate guardado"})
+
+    except Exception as  e:
+        print(e)
+        db.session.rollback()
+        return jsonify({"status": 400, "msg": "Erro ao guardar rate"})

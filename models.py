@@ -79,7 +79,7 @@ class Ratings(db.Model):
         self.task = task
 
     def __repr__(self):
-        return '<id {}>'.format(self.id)
+        return '<id {} value {}>'.format(self.id, self.value)
 
 
 class Proposals(db.Model):
