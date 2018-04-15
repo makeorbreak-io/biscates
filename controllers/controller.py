@@ -60,10 +60,10 @@ def get_user_name(id):
     return names[0]
 
 
-def register_user(email, name, password):
+def register_user(email, name, password, photo, address, contact, description):
     hash_object = hashlib.sha256(password.encode('utf-8'))
     hex_dig = hash_object.hexdigest()
-    user = Users(name, email, hex_dig)
+    user = Users(name=name, email=email, password=hex_dig, photo=photo, address=address, contact=contact, description=description)
 
     try:
         db.session.add(user)
