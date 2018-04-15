@@ -133,9 +133,10 @@ def profile(user_id):
     user = get_user_by_id(id)
     tasks = get_user_tasks(id)
     average = get_user_average(id)
-    average = float("{0:.2f}".format(average))
-    print("\n")
-    print(average)
+
+    if average:
+        average = float("{0:.2f}".format(average))
+        
     for task in tasks:
         task.rating = get_task_rating(task.id)
     return render_template("profile.html", user=user, tasks=tasks, average=average, show_info_div=show_info_div)
