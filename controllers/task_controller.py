@@ -1,3 +1,4 @@
+import hashlib
 from app import db
 from models import Tasks
 from models import Users
@@ -32,14 +33,18 @@ def get_user_by_email(email):
 
 
 def validate_login(email, password):
+    hash_object = hashlib.sha256(password.encode('utf-8'))
+    hex_dig = hash_object.hexdigest()
     user = Users.query.filter_by(email=email).first()
-    if user and user.email == email and user.password == password:
+    if user and user.email == email and user.password == hex_dig:
         return user.id
     return None
 
 
 def register_user(email, name, password):
-    user = Users(name, email, password)
+    hash_object = hashlib.sha256(password.encode('utf-8'))
+    hex_dig = hash_object.hexdigest()
+    user = Users(name, email, hex_dig)
 
     try:
         db.session.add(user)
