@@ -83,15 +83,11 @@ def update_proposal(proposalID, type):
 
 
 def insertProposal(taskID, user, offer, description):
-
     proposal = Proposals(user, offer, description, False, taskID)
-
     try:
-
         db.session.add(proposal)
         db.session.commit()
         return jsonify({"status": 203, "msg": "Proposta guardada"})
-
     except Exception as  e:
         print(e)
         db.session.rollback()

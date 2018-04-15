@@ -1,14 +1,15 @@
 function acceptProposal(proposalID) {
-    hideInfoProposal
+    hideInfoProposal();
 
-    var jqxhr = $.post( "/proposal", {type: 'accept',proposalID: proposalID}, function(result) {
+    var jqxhr = $.post( "/proposal", {type: 'accept',proposalID: proposalID}, function() {
+        console.log(proposalID);
+    }).done(function() {
+        showInfoProposal("A sua acção foi registada")
     })
-         .done(function() {
-           showInfoProposal("A sua acção foi registada")
-        })
-        .fail(function(e) {
-            showInfoProposal("Por favor, tente mais tarde")
-        })
+    .fail(function(e) {
+        showInfoProposal("Por favor, tente mais tarde")
+    });
+}
 
 
 function rejectProposal(proposalID) {
@@ -16,47 +17,47 @@ function rejectProposal(proposalID) {
     var jqxhr = $.post( "/proposal", {type: 'reject',proposalID: proposalID}, function() {
 
     })
-        .done(function() {
-           showInfoProposal("A sua acção foi registada")
-        })
-        .fail(function(e) {
-            showInfoProposal("Por favor, tente mais tarde")
-        })
+    .done(function() {
+        showInfoProposal("A sua acção foi registada")
+    })
+    .fail(function(e) {
+        showInfoProposal("Por favor, tente mais tarde")
+    })
 
 }
 
 function showInfoProposal(msg) {
-        $("#infoNewPropose").show();
-        $("#infoNewProposemsg").text(msg)
+    $("#infoNewPropose").show();
+    $("#infoNewProposemsg").text(msg)
 }
 
 function hideInfoProposal() {
-        $("#infoNewPropose").hide();
+    $("#infoNewPropose").hide();
 }
 
 function rate(rate, from_user, to_user, task_id) {
     var jqxhr = $.post( "/rate", {rate: rate, from_user: from_user, to_user: to_user, task_id: task_id}, function() {
     })
-        .done(function() {
-        })
-        .fail(function(e) {
-        })
-        .always(function() {
-        });
+    .done(function() {
+    })
+    .fail(function(e) {
+    })
+    .always(function() {
+    });
 }
 
 $(document).ready(function () {
-  $('.ui.rating').rating('setting', 'onRate', function(value) {
-    from_user = $('.rating').data('from');
-    to_user = $('.rating').data('to');
-    task_id = $('.rating').data('id');
+    $('.ui.rating').rating('setting', 'onRate', function(value) {
+        from_user = $('.rating').data('from');
+        to_user = $('.rating').data('to');
+        task_id = $('.rating').data('id');
 
-    rate(value, from_user, to_user, task_id);
-  });
+        rate(value, from_user, to_user, task_id);
+    });
 
-  $('.ui.dropdown').dropdown({
-      onChange: function(){
-          $('.create-task > input').removeAttr('disabled');
-      }
-  });
+    $('.ui.dropdown').dropdown({
+        onChange: function(){
+            $('.create-task > input').removeAttr('disabled');
+        }
+    });
 });

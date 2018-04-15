@@ -63,7 +63,7 @@
         <form id="newproposal_form" class="ui form" method="POST" action="/proposal">
             {{ newproposal_form.csrf_token }}
             <div class="field" hidden>
-                {{ newproposal_form.user.label }} {{ newproposal_form.user(value=123456) }}
+                <input hidden name="user" value="{{session.id}}"/>
             </div>
             <div class="field">
                 {{ newproposal_form.offer.label }} {{ newproposal_form.offer(size=5) }}
@@ -107,12 +107,13 @@
 
             {% if session['id'] == task.user %}
             <div class="left ui buttons">
-                <button class="ui positive button" onClick="acceptProposal({{task[6]}})">
+                {{task}}
+                <button class="ui positive button" onClick="acceptProposal({{proposal.id}})">
                     <i class="small check icon"> </i>
                     Aceitar
                 </button>
                 <div class="ou"></div>
-                <button class="ui negative button" onClick="rejectProposal({{task[6]}})">
+                <button class="ui negative button" onClick="rejectProposal({{proposal.id}})">
                     <i class="small ban icon"> </i>
                     Rejeitar
                 </button>
