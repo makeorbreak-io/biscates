@@ -15,3 +15,8 @@
   font-size: 2rem;
   padding: 0 68px;
 }
+
+#search i {
+  cursor: pointer;
+  pointer-events: all; !important
+}
