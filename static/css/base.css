@@ -32,3 +32,15 @@
   background-color: #000;
   height: 100%;
 }
+
+.body-row {
+  margin-top: 30px;
+}
+
+#content {
+  height: 100%;
+}
+
+#content .ui.grid {
+  height: 100%;
+}
