@@ -37,13 +37,13 @@
                     <p>{{task.description}}</p>
                 </div>
             </div>
-            {% if session['id'] == task.user %}
+            {% if session['id'] == task.user %} {% if task.approved == true %}
             <div class="extra content">
                 <div class="right floated author">
                     <div data-from="{{ session['id'] }}" data-to="{{ task.user }}" data-id="{{ task.id }}" class='ui rating' data-rating={{rating.value}} data-max-rating="5"></div>
                 </div>
             </div>
-            {% endif %}
+            {% endif %} {% endif %}
         </div>
     </div>
 </div>
