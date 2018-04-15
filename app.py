@@ -73,6 +73,13 @@ def login():
     return render_template("login.html", login_form=login_form)
 
 
+@app.route("/logout", methods=["GET"])
+def logout():
+    session['id'] = None
+    return redirect(url_for('home')
+
+
+
 @app.route("/register", methods=["GET", "POST"])
 def register():
     register_form = RegisterForm()
@@ -107,7 +114,8 @@ def task(task_id):
     proposals = get_proposals(task_id)
     for proposal in proposals:
         proposal.user_info = get_user_by_id(proposal.user)
-    return render_template("task.html", task=task, newproposal_form=newproposal_form, proposals=proposals, session=session)
+    rating = get_task_rating(id)
+    return render_template("task.html", task=task, newproposal_form=newproposal_form, proposals=proposals, session=session, rating=rating)
 
 
 @app.route("/profile/<user_id>")
@@ -137,7 +145,9 @@ def proposal():
                 offer = request.form.get('offer')
                 description = request.form.get('description')
                 msg = insertProposal(taskID, user, offer, description)
+
                 return redirect("/task/" + taskID + "?status=aceite")
+
 
             else:
                 proposalID = request.form.get('proposalID')
@@ -150,6 +160,19 @@ def new_task():
     task_form = TaskForm()
     types = get_task_types()
     return render_template("new.html", task_form=task_form, task_types=types)
+
+
+@app.route("/rate", methods=["POST"])
+def rate_task():
+    print(request.form)
+    rate = request.form.get('rate')
+    task_id = request.form.get('task_id')
+    from_user = request.form.get('from_user')
+    to_user = request.form.get('to_user')
+    print(rate)
+    insert_rating(rate, task_id, from_user, to_user)
+
+    return task(task_id)
 
 
 @app.route("/new", methods=["POST"])

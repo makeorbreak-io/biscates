@@ -34,12 +34,29 @@ function hideInfoProposal() {
         $("#infoNewPropose").hide();
 }
 
-
+function rate(rate, from_user, to_user, task_id) {
+    var jqxhr = $.post( "/rate", {rate: rate, from_user: from_user, to_user: to_user, task_id: task_id}, function() {
+    })
+        .done(function() {
+        })
+        .fail(function(e) {
+        })
+        .always(function() {
+        });
+}
 
 $(document).ready(function () {
-    $('.ui.dropdown').dropdown({
-        onChange: function(){
-            $('.create-task > input').removeAttr('disabled');
-        }
-    });
+  $('.ui.rating').rating('setting', 'onRate', function(value) {
+    from_user = $('.rating').data('from');
+    to_user = $('.rating').data('to');
+    task_id = $('.rating').data('id');
+
+    rate(value, from_user, to_user, task_id);
+  });
+
+  $('.ui.dropdown').dropdown({
+      onChange: function(){
+          $('.create-task > input').removeAttr('disabled');
+      }
+  });
 });
