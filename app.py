@@ -121,14 +121,19 @@ def task(task_id):
     task = get_task(id)
     task.user_info = get_user_by_id(task.user)
     proposals = get_proposals(task_id)
+    accepted = False
     for proposal in proposals:
         proposal.user_info = get_user_by_id(proposal.user)
+        if proposal.accepted == True:
+            accepted =  True
+
     rating = get_task_rating(id)
     return render_template("task.html", task=task,
                            newproposal_form=newproposal_form,
                            proposals=proposals,
                            session=session,
-                           rating=rating
+                           rating=rating,
+                           accepted=accepted
                            )
 
 
