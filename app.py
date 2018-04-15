@@ -2,7 +2,7 @@ import os
 from flask import (Flask, render_template, jsonify, abort,
                    redirect, url_for, request, session)
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import or_, func
+from sqlalchemy import or_, func, and_
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextField, PasswordField, StringField
 from wtforms.validators import DataRequired, Email, EqualTo
@@ -230,13 +230,13 @@ def search():
 
     if (search_word in types):
         result = Tasks.query.filter(
-                    or_(Tasks.title.like("%" + search_word + "%"),
+                    and_(or_(Tasks.title.like("%" + search_word + "%"),
                         Tasks.description.like("%" + search_word + "%"),
-                        Tasks.type == search_word)).all()
+                        Tasks.type == search_word), Tasks.approved == False )).all()
     else:
         result = Tasks.query.filter(
-                    or_(Tasks.title.like("%" + search_word + "%"),
-                        Tasks.description.like("%" + search_word + "%"))).all()
+                    and_(or_(Tasks.title.like("%" + search_word + "%"),
+                        Tasks.description.like("%" + search_word + "%")),  Tasks.approved == False)).all()
 
     for task in result:
         task.user_info = get_user_by_id(task.user)
