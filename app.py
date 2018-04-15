@@ -1,5 +1,6 @@
 import os
-from flask import Flask, render_template, jsonify, redirect, url_for, request, session
+from flask import (Flask, render_template, jsonify, abort,
+                   redirect, url_for, request, session)
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import or_, func
 from flask_wtf import FlaskForm
@@ -12,6 +13,7 @@ app.secret_key = os.environ['SECRET_KEY']
 app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+
 
 from controllers.controller import *
 from models import Tasks
@@ -36,7 +38,7 @@ class NewProposalForm(FlaskForm):
     user = StringField('Utilizador', [DataRequired()])
     offer = StringField('Preço', [DataRequired()])
     description = TextField('Descrição', [DataRequired()])
-    task_id = StringField('task_id',[DataRequired()])
+    task_id = StringField('task_id', [DataRequired()])
     type = StringField('type', [DataRequired()])
 
 
@@ -45,6 +47,7 @@ class TaskForm(FlaskForm):
     location = StringField('Location')
     price = StringField('Proposed Price')
     description = StringField('Job Description')
+
 
 @app.route("/")
 def home():
@@ -81,7 +84,6 @@ def logout():
     return redirect(url_for('home'))
 
 
-
 @app.route("/register", methods=["GET", "POST"])
 def register():
     register_form = RegisterForm()
@@ -94,7 +96,8 @@ def register():
         user = get_user_by_email(email)
         if user:
             register_form.password.errors = ['Utilizador já existe.']
-            return render_template('register.html', register_form=register_form)
+            return render_template('register.html',
+                                   register_form=register_form)
         else:
             user_id = register_user(email, name, password)
             if user_id:
@@ -102,8 +105,11 @@ def register():
                 session['name'] = get_user_name(user_id)
                 return redirect(url_for('home'))
             else:
-                register_form.confirm_password.errors = ['Erro a registar utilizador.']
-                return render_template('register.html', register_form=register_form)
+                register_form.confirm_password.errors = [
+                                'Erro a registar utilizador.'
+                                ]
+                return render_template('register.html',
+                                       register_form=register_form)
 
     return render_template("register.html", register_form=register_form)
 
@@ -118,7 +124,12 @@ def task(task_id):
     for proposal in proposals:
         proposal.user_info = get_user_by_id(proposal.user)
     rating = get_task_rating(id)
-    return render_template("task.html", task=task, newproposal_form=newproposal_form, proposals=proposals, session=session, rating=rating)
+    return render_template("task.html", task=task,
+                           newproposal_form=newproposal_form,
+                           proposals=proposals,
+                           session=session,
+                           rating=rating
+                           )
 
 
 @app.route("/profile/<user_id>")
@@ -126,9 +137,8 @@ def profile(user_id):
     id = int(user_id)
 
     show_info_div = False
-
-    #if request.form[sucess]:
-    show_info_div = True
+    if request.form[success]:
+        show_info_div = True
 
     user = get_user_by_id(id)
     tasks = get_user_tasks(id)
@@ -139,11 +149,14 @@ def profile(user_id):
 
     for task in tasks:
         task.rating = get_task_rating(task.id)
-    return render_template("profile.html", user=user, tasks=tasks, average=average, show_info_div=show_info_div)
+    return render_template("profile.html",
+                           user=user,
+                           tasks=tasks,
+                           average=average,
+                           show_info_div=show_info_div)
 
 
 @app.route("/proposal", methods=['POST'])
-
 def proposal():
     type = request.form.get('type')
 
@@ -153,10 +166,7 @@ def proposal():
         offer = request.form.get('offer')
         description = request.form.get('description')
         msg = insertProposal(taskID, user, offer, description)
-
         return redirect("/task/" + taskID + "?status=aceite")
-
-
     else:
         proposalID = request.form.get('proposalID')
         msg = update_proposal(proposalID, type)
@@ -197,43 +207,50 @@ def new_task_post():
         user = session["id"]
 
         try:
-            task = Tasks(title = title,
-                         location = location,
-                         price = price,
-                         description = description,
-                         user = user,
-                         type = type)
-            print("USER:")
-            print(user)
+            task = Tasks(title=title,
+                         location=location,
+                         price=price,
+                         description=description,
+                         user=user,
+                         type=type)
             db.session.add(task)
             db.session.commit()
             link = "/task/{}".format(task.id)
             return redirect(link)
         except Exception as e:
             db.session.rollback()
-            return render_template("new.html", task_form=task_form, task_types=types)
+            return render_template("new.html",
+                                   task_form=task_form,
+                                   task_types=types)
     else:
-        return render_template("new.html", task_form=task_form, task_types=types)
+        return render_template("new.html",
+                               task_form=task_form,
+                               task_types=types)
+
 
 @app.route("/search", methods=["GET"])
 def search():
     types = get_task_types()
-
     search_word = request.args.get('search')
 
     if (search_word in types):
-        result = Tasks.query.filter(or_(Tasks.title.like("%" + search_word + "%"),
-                                    Tasks.description.like("%" + search_word + "%"),
-                                    Tasks.type == search_word)).all()
+        result = Tasks.query.filter(
+                    or_(Tasks.title.like("%" + search_word + "%"),
+                        Tasks.description.like("%" + search_word + "%"),
+                        Tasks.type == search_word)).all()
     else:
-        result = Tasks.query.filter(or_(Tasks.title.like("%" + search_word + "%"),
-                                    Tasks.description.like("%" + search_word + "%"))).all()
+        result = Tasks.query.filter(
+                    or_(Tasks.title.like("%" + search_word + "%"),
+                        Tasks.description.like("%" + search_word + "%"))).all()
 
     for task in result:
         task.user_info = get_user_by_id(task.user)
 
-    return render_template("search.html", tasks=result, search_word=search_word, types=types)
-
+    return render_template("search.html",
+                           tasks=result,
+                           search_word=search_word,
+                           types=types
+                           )
 
 
 if __name__ == '__main__':

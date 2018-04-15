@@ -9,23 +9,30 @@ from sqlalchemy import func
 
 
 def get_all_tasks():
-    tasks = Tasks.query.filter_by(approved=False).order_by(Tasks.created_at.desc()).limit(10).all()
+    tasks = Tasks.query.filter_by(approved=False).order_by(
+            Tasks.created_at.desc()).limit(10).all()
     return tasks
+
 
 def get_user_by_id(id):
     user = Users.query.get(id)
     return user
 
+
 def get_user_tasks(user_id):
     tasks = Tasks.query.filter_by(user=user_id).all()
     return tasks
+
 
 def get_task_rating(id):
     rating = Ratings.query.filter_by(task=id).first()
     return rating
 
+
 def get_user_average(id):
-    average = Ratings.query.with_entities(func.avg(Ratings.value).label('average')).filter(Ratings.to_user == id).scalar()
+    average = Ratings.query.with_entities(
+                func.avg(Ratings.value).label('average')).filter(
+                Ratings.to_user == id).scalar()
     return average
 
 
@@ -46,10 +53,12 @@ def validate_login(email, password):
         return user.id
     return None
 
+
 def get_user_name(id):
     user = get_user_by_id(id)
     names = user.name.split(" ")
     return names[0]
+
 
 def register_user(email, name, password):
     hash_object = hashlib.sha256(password.encode('utf-8'))
@@ -65,29 +74,29 @@ def register_user(email, name, password):
 
     return user.id
 
+
 def get_proposals(task_id):
     proposals = Proposals.query.filter_by(task=task_id).all()
     return proposals
 
-def update_proposal(proposalID, type):
 
-    proposal = Proposals.query.filter_by(id=proposalID).first()
+def update_proposal(proposal_id, proposal_type):
+
+    proposal = Proposals.query.filter_by(id=proposal_id).first()
 
     status = 200
     msg = "Proposta aceite"
 
     if proposal is not None:
-
-     if type == 'accept':
-        proposal.accepted = True
-        db.session.commit()
-
-     elif  type == 'reject':
-        proposal.accepted = False
-        db.session.commit()
-     else:
-        status = 400
-        msg = "Erro ao alterar proposta"
+        if proposal_type == 'accept':
+            proposal.accepted = True
+            db.session.commit()
+        elif proposal_type == 'reject':
+            proposal.accepted = False
+            db.session.commit()
+        else:
+            status = 400
+            msg = "Erro ao alterar proposta"
 
     return jsonify({"status": status, "msg": msg})
 
@@ -98,7 +107,7 @@ def insertProposal(taskID, user, offer, description):
         db.session.add(proposal)
         db.session.commit()
         return jsonify({"status": 203, "msg": "Proposta guardada"})
-    except Exception as  e:
+    except Exception as e:
         print(e)
         db.session.rollback()
         return jsonify({"status": 400, "msg": "Erro ao guardar proposta"})
@@ -110,8 +119,8 @@ def get_task_types():
         types.append(type)
     return types
 
-def insert_rating(rate, task_id, from_user, to_user):
 
+def insert_rating(rate, task_id, from_user, to_user):
     rating = get_task_rating(task_id)
 
     if rating is not None:
@@ -120,13 +129,12 @@ def insert_rating(rate, task_id, from_user, to_user):
         return jsonify({"status": 203, "msg": "Rate guardado"})
 
     rate = Ratings(rate, from_user, to_user, task_id)
-    try:
 
+    try:
         db.session.add(rate)
         db.session.commit()
         return jsonify({"status": 203, "msg": "Rate guardado"})
-
-    except Exception as  e:
+    except Exception as e:
         print(e)
         db.session.rollback()
         return jsonify({"status": 400, "msg": "Erro ao guardar rate"})

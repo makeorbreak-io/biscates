@@ -1,6 +1,7 @@
 from app import db
 from sqlalchemy import Column, DateTime, ForeignKey, UniqueConstraint, func
-import enum, datetime
+import enum
+import datetime
 
 
 class Type(enum.Enum):
@@ -35,7 +36,10 @@ class Users(db.Model):
         self.password = password
 
     def __repr__(self):
-        return '<id {} name {} email {} photo {} address {} contact {} certified {} description {}>'.format(self.id, self.email, self.photo, self.address, self.contact, self.certified, self.description)
+        return ('<id {} name {} email {} photo {} address {} contact'
+                ' {} certified {} description {}>').format(
+                self.id, self.email, self.photo, self.address, self.contact,
+                self.certified, self.description)
 
 
 class Tasks(db.Model):
@@ -44,7 +48,7 @@ class Tasks(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(), nullable=False)
     location = db.Column(db.String(), nullable=False)
-    price = db.Column(db.Float, nullable = False)
+    price = db.Column(db.Float, nullable=False)
     description = db.Column(db.String())
     user = db.Column(ForeignKey("users.id"), nullable=False)
     type = db.Column(db.Enum(Type))
@@ -61,7 +65,10 @@ class Tasks(db.Model):
         self.type = type
 
     def __repr__(self):
-        return '<id {} title {} type {} approved {} user {} location {} description {}>'.format(self.id, self.title, self.type, self.approved, self.user, self.location, self.description)
+        return ('<id {} title {} type {} approved {} user {}'
+                'location {} description {}>').format(
+                self.id, self.title, self.type, self.approved,
+                self.user, self.location, self.description)
 
 
 class Ratings(db.Model):
@@ -70,7 +77,8 @@ class Ratings(db.Model):
     from_user = db.Column(ForeignKey("users.id"), nullable=False)
     to_user = db.Column(ForeignKey("users.id"), nullable=False)
     task = db.Column(ForeignKey("tasks.id"), nullable=False)
-    __table_args__ = (UniqueConstraint('from_user', 'to_user', 'task', name='unique_user_rating'),)
+    __table_args__ = (UniqueConstraint('from_user', 'to_user', 'task',
+                                       name='unique_user_rating'),)
 
     def __init__(self, value, from_user, to_user, task):
         self.value = value
@@ -98,4 +106,7 @@ class Proposals(db.Model):
         self.task = task
 
     def __repr__(self):
-        return '<id {} user {} offer {} description {} accepted {} task {}>'.format(self.id, self.user, self.offer, self.description, self.accepted, self.task)
+        return ('<id {} user {} offer {} description {}'
+                ' accepted {} task {}>').format(self.id, self.user,
+                                                self.offer, self.description,
+                                                self.accepted, self.task)
