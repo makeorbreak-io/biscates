@@ -40,16 +40,20 @@
   {% for task in tasks %}
   <a class="ui fluid card " href="../task/{{task.id}}">
     <div class="content">
-      <div class="header">{{task.title}}</div>
+      <div class="header"><h3>{{task.title}}</h3></div>
       <div class="meta">
-        <span class="category">{{task.type}}</span>
+        <span class="category">{{task.type.name}}</span>
       </div>
       <div class="description">
-        <p>{{task.description}}</p>
+          <p>{{task.description}}</p>
+          <p>{{task.location}}</p>
       </div>
     </div>
     {% if task.approved %} {% if task.rating.value is not none %}
     <div class="extra content right aligned">
+        <div class="left floated" style="color: black;">
+            Preço Proposto: {{task.price}} €
+        </div>
       <div class='ui rating specific' data-rating={{task.rating.value}} data-max-rating="5"></div>
     </div>
     {% endif %} {% endif %}

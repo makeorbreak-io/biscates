@@ -38,15 +38,19 @@
 
     <a class="ui fluid card " href="/task/{{task.id}}">
         <div class="content">
-            <div class="header">{{task.title}}</div>
+            <div class="header"><h3>{{task.title}}</h3></div>
             <div class="meta">
                 <span class="category">{{task.type.name}}</span>
             </div>
             <div class="description">
-                  <p>{{task.approved}} - Penso que isto é parvo</p>
+                  <p>{{task.description}}</p>
+                  <p>{{task.location}}</p>
               </div>
           </div>
           <div class="extra content">
+              <div class="left floated" style="color:black;">
+                  Preço Proposto: {{task.price}} €
+              </div>
               <div class="right floated author">
                   <img class="ui  avatar big image" src={{task.user_info.photo or 'https://dt.azadicdn.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png?200'}}> {{task.user_info.name}}
               </div>
