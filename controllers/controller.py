@@ -5,6 +5,7 @@ from models import Users
 from models import Proposals
 from flask import jsonify
 from models import Ratings, Type
+from sqlalchemy import func
 
 
 def get_all_tasks():
@@ -22,6 +23,11 @@ def get_user_tasks(user_id):
 def get_task_rating(id):
     rating = Ratings.query.filter_by(task=id).first()
     return rating
+
+def get_user_average(id):
+    average = Ratings.query.with_entities(func.avg(Ratings.value).label('average')).filter(Ratings.to_user == id).scalar()
+    return average
+
 
 def get_task(id):
     task = Tasks.query.get(id)

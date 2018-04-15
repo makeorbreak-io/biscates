@@ -1,12 +1,11 @@
 import os
 from flask import Flask, render_template, jsonify, redirect, url_for, request, session
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import or_
+from sqlalchemy import or_, func
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextField, PasswordField, StringField
 from wtforms.validators import DataRequired, Email, EqualTo
 from wtforms.fields.html5 import EmailField
-from controllers.task_controller import *
 
 app = Flask(__name__)
 app.secret_key = os.environ['SECRET_KEY']
@@ -14,8 +13,8 @@ app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+from controllers.controller import *
 from models import Tasks
-from controllers.task_controller import *
 
 
 class LoginForm(FlaskForm):
@@ -112,7 +111,7 @@ def register():
 @app.route("/task/<task_id>")
 def task(task_id):
     newproposal_form = NewProposalForm()
-    id = float(task_id)
+    id = int(task_id)
     task = get_task(id)
     task.user_info = get_user_by_id(task.user)
     proposals = get_proposals(task_id)
@@ -124,7 +123,7 @@ def task(task_id):
 
 @app.route("/profile/<user_id>")
 def profile(user_id):
-    id = float(user_id)
+    id = int(user_id)
 
     show_info_div = False
 
@@ -133,9 +132,13 @@ def profile(user_id):
 
     user = get_user_by_id(id)
     tasks = get_user_tasks(id)
+    average = get_user_average(id)
+    average = float("{0:.2f}".format(average))
+    print("\n")
+    print(average)
     for task in tasks:
         task.rating = get_task_rating(task.id)
-    return render_template("profile.html", user=user, tasks=tasks, show_info_div=show_info_div)
+    return render_template("profile.html", user=user, tasks=tasks, average=average, show_info_div=show_info_div)
 
 
 @app.route("/proposal", methods=['POST'])
