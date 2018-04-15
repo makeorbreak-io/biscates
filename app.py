@@ -13,6 +13,7 @@ app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+from models import Tasks
 from controllers.task_controller import *
 
 
@@ -175,6 +176,13 @@ def new_task_post():
     else:
         return render_template("new.html", task_form=task_form)
 
+@app.route("/search", methods=["GET"])
+def search():
+    search_word = request.args.get('search')
+
+    result = Tasks.query.filter(Tasks.title.like(search_word + "%")).all()
+
+    return  jsonify(result)
 
 
 if __name__ == '__main__':

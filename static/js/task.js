@@ -1,31 +1,37 @@
 function acceptProposal(proposalID) {
+    hideInfoProposal
+
     var jqxhr = $.post( "/proposal", {type: 'accept',proposalID: proposalID}, function(result) {
-        alert( result );
     })
-        .done(function() {
-            alert( "second success" );
+         .done(function() {
+           showInfoProposal("A sua acção foi registada")
         })
-        .fail(function() {
-            alert( e.toString() );
+        .fail(function(e) {
+            showInfoProposal("Por favor, tente mais tarde")
         })
-        .always(function() {
-            alert( "finished" );
-        });
 }
 
 function rejectProposal(proposalID) {
+    hideInfoProposal();
     var jqxhr = $.post( "/proposal", {type: 'reject',proposalID: proposalID}, function() {
-        alert( "success" );
+
     })
         .done(function() {
-            alert( "second success" );
+           showInfoProposal("A sua acção foi registada")
         })
         .fail(function(e) {
-            alert( e.toString() );
+            showInfoProposal("Por favor, tente mais tarde")
         })
-        .always(function() {
-            alert( "finished" );
-        });
+
+}
+
+function showInfoProposal(msg) {
+        $("#infoNewPropose").show();
+        $("#infoNewProposemsg").text(msg)
+}
+
+function hideInfoProposal() {
+        $("#infoNewPropose").hide();
 }
 
 $(document).ready(function () {
