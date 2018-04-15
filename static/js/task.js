@@ -63,7 +63,7 @@ $(document).ready(function () {
 
     $('.ui.dropdown').dropdown({
         onChange: function(){
-            $('.create-task > input').removeAttr('disabled');
+            $('#newSubmit').removeAttr('disabled');
         }
     });
 });
