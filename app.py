@@ -1,6 +1,7 @@
 import os
 from flask import Flask, render_template, jsonify, redirect, url_for, request, session
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import or_
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextField, PasswordField, StringField
 from wtforms.validators import DataRequired, Email, EqualTo
@@ -213,9 +214,13 @@ def search():
 
     search_word = request.args.get('search')
 
-    result = Tasks.query.filter(
-        (Tasks.title.like( "%"+search_word + "%")) |
-        (Tasks.description.like("%"+search_word + "%"))).all()
+    if (search_word in types):
+        result = Tasks.query.filter(or_(Tasks.title.like("%" + search_word + "%"),
+                                    Tasks.description.like("%" + search_word + "%"),
+                                    Tasks.type == search_word)).all()
+    else:
+        result = Tasks.query.filter(or_(Tasks.title.like("%" + search_word + "%"),
+                                    Tasks.description.like("%" + search_word + "%"))).all()
 
     for task in result:
         task.user_info = get_user_by_id(task.user)
